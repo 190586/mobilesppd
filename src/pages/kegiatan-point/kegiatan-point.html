@@ -1,0 +1,23 @@
+<ion-header>
+  <ion-navbar>
+      <ion-title>Uraian Kegiatan</ion-title>
+    </ion-navbar>
+  </ion-header>
+  
+  <ion-content padding>
+    <ion-list [@listAnimation]="arrDataUraian.length">
+      <ion-item *ngFor="let item of arrDataUraian; let i = index" text-wrap>
+        <!-- <ion-icon name="leaf" item-start></ion-icon> -->
+        <ion-badge item-start>{{ (i+1) }}</ion-badge>
+        <p>{{ item.URAIAN_DESC }}</p>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+
+  <!-- Fab Button -->
+<ion-fab #fab bottom right>
+  <button button-ion-fab ion-fab (click)="tambahPoint($event)">
+    <ion-icon class="icon" name="clipboard"></ion-icon>
+</button>
+</ion-fab>
+  

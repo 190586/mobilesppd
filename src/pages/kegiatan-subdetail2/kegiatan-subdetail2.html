@@ -1,0 +1,61 @@
+
+<ion-header>
+    <ion-navbar>
+      <button ion-button menuToggle>
+        <ion-icon name="menu"></ion-icon>
+      </button>
+    
+        <ion-title>
+            {{ currentData.KODE }}
+        </ion-title>
+    </ion-navbar>
+  
+  </ion-header>
+  
+  
+  <ion-content padding>
+    <h5>Informasi</h5>
+    <hr>
+    <h4>{{ currentData.NAMA_KEGIATAN }}</h4>
+    <ion-grid>
+        <ion-row>
+          <ion-col>
+              <p>Kontrak : <br><strong>{{ currentData.KONTRAK }}</strong></p>
+          </ion-col>
+          <ion-col>
+              <p>Tahun : <br><strong>{{ currentYear }}</strong></p>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col>
+                <p>Lokasi : <br><strong>{{ currentData.PROVINSI_DESC }}, {{ currentData.KOTA_DESC }}</strong></p>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col>
+                <p>Rencana Lelang : <br><strong>{{ currentData.RENCANA_LELANG | date:'dd MMMM yyyy':'+0700' }}</strong></p>
+            </ion-col>
+            <ion-col>
+                <p>Rencana Kontrak : <br><strong>{{ currentData.RENCANA_KONTRAK | date:'dd MMM yyyy':'+0700' }}</strong></p>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+              <ion-col>
+                  <p>Pagu RKAKL : <br><strong>{{ currentData.PAGU_RKAKL | currency:'Rp. ' }}</strong></p>
+              </ion-col>
+              <ion-col>
+                  <p>Pagu RKAKL : <br><strong>{{ currentData.PAGU_RKAKL | currency:'Rp. ' }}</strong></p>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+                <ion-col>
+                    <p>PHO : <br><strong>{{ currentData.PHO | date:'dd MMM yyyy':'+0700' }}</strong></p>
+                </ion-col>
+            </ion-row>
+      </ion-grid>
+    
+    <ion-buttons>
+        <button color="primary" ion-button="" small="" (click)="lihatLaporan($event)"><span class="button-inner">Lihat Laporan</span><div class="button-effect"></div></button>
+    </ion-buttons>
+    <br>
+  </ion-content>  

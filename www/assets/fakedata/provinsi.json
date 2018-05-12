@@ -1,0 +1,18 @@
+[
+    {"PROVINSI_ID":1, "NAMA_PROVINSI": "Aceh"},
+    {"PROVINSI_ID":2, "NAMA_PROVINSI": "Bali"}, 
+    {"PROVINSI_ID":3, "NAMA_PROVINSI": "Banten"}, 
+    {"PROVINSI_ID":4, "NAMA_PROVINSI": "Bengkulu"}, 
+    {"PROVINSI_ID":5, "NAMA_PROVINSI": "DKI Yogyakarta"}, 
+    {"PROVINSI_ID":6, "NAMA_PROVINSI": "DKI Jakarta"}, 
+    {"PROVINSI_ID":7, "NAMA_PROVINSI": "Gorontalo"}, 
+    {"PROVINSI_ID":8, "NAMA_PROVINSI": "Jambi"}, 
+    {"PROVINSI_ID":9, "NAMA_PROVINSI": "Jawa Barat"}, 
+    {"PROVINSI_ID":10, "NAMA_PROVINSI": "Jawa Tengah"}, 
+    {"PROVINSI_ID":11, "NAMA_PROVINSI": "Jawa Timur"}, 
+    {"PROVINSI_ID":12, "NAMA_PROVINSI": "Kalimantan Barat"}, 
+    {"PROVINSI_ID":13, "NAMA_PROVINSI": "Kalimantan Selatan"}, 
+    {"PROVINSI_ID":14, "NAMA_PROVINSI": "Kalimantan Tengah"}, 
+    {"PROVINSI_ID":15, "NAMA_PROVINSI": "Kalimantan Timur"}, 
+    {"PROVINSI_ID":16, "NAMA_PROVINSI": "Kalimantan Utara"}
+]

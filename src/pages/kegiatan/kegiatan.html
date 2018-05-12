@@ -1,0 +1,37 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>{{ labelProv }}</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content padding>
+    <ion-toolbar class="toolbar" no-border>
+    <ion-item>
+        <ion-label>Provinsi</ion-label>
+        <ion-select [ngModel]="provID" (ngModelChange)='getdataKegiatan(provID=$event)' placeholder="Pilih Provinsi">
+          <ion-option value="0">Seluruh Provinsi</ion-option>
+          <ion-option *ngFor="let prov of listProvinsi;let i = index" value="{{ prov.PROVINSI_ID }}">{{ prov.NAMA_PROVINSI }}</ion-option>
+        </ion-select>
+      </ion-item>
+    </ion-toolbar>
+
+    <ion-list [@listAnimation]="listKegiatan.length">
+        <ion-item *ngIf="(listKegiatan)?.length==0">Maaf, kegiatan masih kosong.</ion-item>
+        <ion-item *ngFor="let item of listKegiatan;let i = index" (click)="getDetailKegiatan($event, item)" >
+            <ion-grid>
+              <ion-row>
+                  <ion-col><h3>{{ item.KODE }}</h3></ion-col>
+                  <ion-col><h3 align="right">{{ item.KONTRAK }}</h3></ion-col>
+              </ion-row>
+              <ion-row>
+                  <ion-col>
+                    <h2>{{ item.NAMA_KEGIATAN }}</h2>
+                    <p>{{ item.KOTA_DESC }}, {{ item.PROVINSI_DESC }}</p>
+                  </ion-col>
+              </ion-row>
+            </ion-grid>
+        </ion-item>
+    </ion-list>
+</ion-content>

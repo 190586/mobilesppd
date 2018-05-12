@@ -1,0 +1,35 @@
+
+<ion-header>
+
+    <ion-navbar>
+        <ion-title>
+            Detail Perjalanan Dinas
+        </ion-title>
+    </ion-navbar>
+  
+  </ion-header>
+  
+  
+  <ion-content padding>
+    <h5>Informasi</h5>
+    <hr>
+    <h4>{{ currentData.NAMA_KEGIATAN }}</h4>
+    <p>Tahun : <strong>{{ currentYear }}</strong></p>
+    <p>Lokasi : <strong>{{ currentData.PROVINSI_DESC }}, {{ currentData.KOTA_DESC }}</strong></p>
+  
+    <br>
+    <p class="text-center">Uraian Foto &amp; Kegiatan</p>
+    <ion-list>
+        <button ion-item (click)="getAllFoto($event)">
+            Foto Kegiatan
+            <ion-badge item-end>{{ currentData.TOTAL_FOTO }}</ion-badge>
+        </button>
+        <button ion-item (click)="getAllPoint($event)">
+            Point-point Kegiatan
+            <ion-badge item-end>{{ currentData.TOTAL_URAIAN }}</ion-badge>
+        </button>  
+    </ion-list>
+  </ion-content>
+  
+  
+  

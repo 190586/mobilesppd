@@ -1,0 +1,24 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Foto Kegiatan</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <ion-list [@listAnimation]="arrDataFoto.length">
+    <ion-item *ngFor="let foto of arrDataFoto;let i = index" (click)="lihatLaporan($event, foto)">
+        <img src="{{ foto.IMG_PATH }}">
+      <p text-wrap>{{ foto.CAPTION }}</p>
+    </ion-item>
+  </ion-list>
+</ion-content>
+
+<!-- Fab Button -->
+<ion-fab #fab bottom right>
+  <button button-ion-fab ion-fab (click)="ambilFoto($event)">
+    <ion-icon class="icon" name="camera"></ion-icon>
+</button>
+</ion-fab>

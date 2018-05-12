@@ -1,0 +1,19 @@
+[
+    {
+		"KOTA_ID": 1,
+		"PROVINSI_ID": 9,
+		"NAMA_KOTA": "Bandung"
+	},{
+		"KOTA_ID": 2,
+		"PROVINSI_ID": 9,
+		"NAMA_KOTA": "Bogor"
+	},{
+		"KOTA_ID": 3,
+		"PROVINSI_ID": 9,
+		"NAMA_KOTA": "Cianjur"
+	},{
+		"KOTA_ID": 4,
+		"PROVINSI_ID": 9,
+		"NAMA_KOTA": "Banjar"
+    }
+]

@@ -1,0 +1,38 @@
+[
+    {
+        "KEGIATAN_ID":4,
+        "KODE":"2.1.321.321",
+        "NAMA_KEGIATAN":"Kegiatan AB1 dalam rangka dfdfad",
+        "NO_SURAT_TUGAS":"2.1.225",
+        "TGL_MULAI":"2018-06-18",
+        "TGL_AKHIR":"2018-06-20",
+        "PROVINSI_ID":9,
+        "PROVINSI_DESC":"DKI Jakarta",
+        "KOTA_ID":2,
+        "KOTA_DESC":"Jakarta Selatan",
+        "KONTRAK":"Tahunan",
+        "CREATED_BY":"Hendrik Budiman",
+        "RENCANA_LELANG":"2018-06-18",
+        "RENCANA_KONTRAK":"2018-06-18", 
+        "PAGU_RKAKL":15000000000,   
+        "PHO":"2018-06-18" 
+    },
+    {
+        "KEGIATAN_ID":5,
+        "KODE":"2.1.321.321",
+        "NAMA_KEGIATAN":"Kegiatan DDD dalam rangka dfdfad",
+        "NO_SURAT_TUGAS":"2.1.225",
+        "TGL_MULAI":"2018-06-18",
+        "TGL_AKHIR":"2018-06-20",
+        "PROVINSI_ID":9,
+        "PROVINSI_DESC":"DKI Jakarta",
+        "KOTA_ID":2,
+        "KOTA_DESC":"Jakarta Barat",
+        "KONTRAK":"Undangan",
+        "CREATED_BY":"Hendrik Budiman",
+        "RENCANA_LELANG":"2018-06-18",
+        "RENCANA_KONTRAK":"2018-06-18", 
+        "PAGU_RKAKL":25000000000,   
+        "PHO":"2018-06-18" 
+    }
+]

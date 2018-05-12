@@ -1,0 +1,24 @@
+<ion-header>
+
+    <ion-navbar>
+      <ion-title>Tambah Uraian</ion-title>
+    </ion-navbar>
+  
+  </ion-header>
+  
+  
+  <ion-content padding>
+      <form [formGroup]="uraianForm" (ngSubmit)="onSubmit()">
+          <ion-list>
+              <ion-item>
+                  <ion-label color="primary" stacked>Uraian</ion-label>
+                  <ion-textarea placeholder="Deskripsi uraian" formControlName="uraian" ngModel></ion-textarea>
+              </ion-item>
+              
+          </ion-list>    
+          <ion-buttons>
+              <button ion-button block color="primary" type="submit" [disabled]="!uraianForm.valid">Simpan</button>
+          </ion-buttons>
+      </form>
+  </ion-content>
+  

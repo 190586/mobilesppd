@@ -1,0 +1,26 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Ambil Gambar Foto</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+    <ion-img class="imageCam img-responsive" style="width: 100%; height: 85%;" src="{{ imgCam }}"></ion-img>
+    <br>
+    <form [formGroup]="uploadForm" (ngSubmit)="onSubmit()">
+        <ion-list>
+            <ion-item>
+                <ion-label color="primary" stacked>Komentar</ion-label>
+                <ion-textarea placeholder="Deskripsi foto" formControlName="caption" ngModel></ion-textarea>
+            </ion-item>
+            
+        </ion-list>    
+        <ion-buttons>
+            <button ion-button block color="secondary" type="button" (click)="getPic($event)">Ambil Gambar</button>
+            <button ion-button block color="primary" type="submit" [disabled]="!uploadForm.valid">Unggah</button>
+        </ion-buttons>
+    </form>
+</ion-content>

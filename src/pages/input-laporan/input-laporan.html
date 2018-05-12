@@ -1,0 +1,43 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Laporan Perjalanan Dinas</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+    <form [formGroup]="lapForm" (ngSubmit)="onSubmit()">
+      <ion-list>
+          <ion-item>
+              <ion-label color="primary" stacked>No. Surat Tugas</ion-label>
+              <ion-input type="text" placeholder="Nomor surat" formControlName="no_surat" ngModel></ion-input>
+          </ion-item>
+          <ion-item>
+              <ion-label color="primary" stacked>Tanggal Mulai</ion-label>
+              <ion-datetime placeholder="Tanggal mulai" displayFormat="DD-MM-YYYY" pickerFormat="DD MMMM YYYY" formControlName="tgl_mulai" ngModel></ion-datetime>
+          </ion-item>
+          <ion-item>
+              <ion-label color="primary" stacked>Tanggal Akhir</ion-label>
+              <ion-datetime placeholder="Tanggal akhir" displayFormat="DD-MM-YYYY" pickerFormat="DD MMMM YYYY" formControlName="tgl_akhir" ngModel></ion-datetime>
+          </ion-item>
+          <ion-item>
+              <ion-label color="primary" stacked>Provinsi</ion-label>
+              <ion-select [(ngModel)]="currentData.PROVINSI_ID" formControlName="provinsi_id">
+                <ion-option *ngFor="let prov of listProvinsi;let i=index" value="{{ prov.PROVINSI_ID }}">{{ prov.NAMA_PROVINSI }}</ion-option>
+              </ion-select>
+          </ion-item>
+          <ion-item>
+              <ion-label color="primary" stacked>Kota</ion-label>
+              <ion-select placeholder="Pilih Kota" formControlName="kota_id" ngModel>
+                <ion-option *ngFor="let kota of listKota;let i=index" value="{{ kota.KOTA_ID }}">{{ kota.NAMA_KOTA }}</ion-option>
+              </ion-select>
+            </ion-item>
+      </ion-list>    
+      <ion-buttons>
+        <button ion-button block color="primary" type="submit" [disabled]="!lapForm.valid">Simpan</button>
+        <button ion-button block color="secondary" type="button" (click)="cancel($event)">Batal</button>
+      </ion-buttons>
+    </form>
+</ion-content>

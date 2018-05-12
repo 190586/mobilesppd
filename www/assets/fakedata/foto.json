@@ -1,0 +1,20 @@
+[
+    {
+        "IMG_ID":1,
+        "IMG_PATH":"assets/fakedata/travel-img-1.jpg",
+        "CAPTION":"Young Asian traveling backpacker in Khaosan Road outdoor market in Bangkok, Thailand",
+        "KEGIATAN_ID":1
+    },
+    {
+        "IMG_ID":2,
+        "IMG_PATH":"assets/fakedata/travel-img-2.jpg",
+        "CAPTION":"female traveler photographing temples at Bagan Myanmar Asia at sunrise",
+        "KEGIATAN_ID":1
+    },
+    {
+        "IMG_ID":3,
+        "IMG_PATH":"assets/fakedata/travel-img-3.jpg",
+        "CAPTION":"Back side of traveler girl looking at the flying plane above the sea, travel and active lifestyle concept",
+        "KEGIATAN_ID":1
+    }
+]

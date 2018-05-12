@@ -1,0 +1,61 @@
+[
+    {
+        "KEGIATAN_ID":1,
+        "KEGIATAN_DETAIL_ID":1,
+        "KODE":"2.1.321.321",
+        "NAMA_KEGIATAN":"Kegiatan ABC dalam rangka XYZ",
+        "NO_SURAT_TUGAS":"2.1.225",
+        "TGL_MULAI":"2018-05-10",
+        "TGL_AKHIR":"2018-05-12",
+        "PROVINSI_ID":9,
+        "PROVINSI_DESC":"Jawa Barat",
+        "KOTA_ID":2,
+        "KOTA_DESC":"Bandung",
+        "KONTRAK":"Tahunan",
+        "CREATED_BY":"Hendrik Budiman",
+        "RENCANA_LELANG":"2018-05-10",
+        "RENCANA_KONTRAK":"2018-05-10", 
+        "PAGU_RKAKL":12000000000,   
+        "PHO":"2018-05-10",
+        "DETAIL_LAPORAN": [
+            {
+                "DETAIL_LAPORAN_ID":1,
+                "TGL_MULAI":"2018-05-10",
+                "TGL_AKHIR":"2018-05-12",
+                "CREATED_BY":"Hendrik Budiman",
+                "TOTAL_FOTO":3,
+                "TOTAL_URAIAN":4,
+                "KODE":"B 21332180","PROVINSI_ID":9,
+                "PROVINSI_DESC":"Jawa Barat",
+                "KOTA_ID":2,
+                "KOTA_DESC":"Bandung"
+            },
+            {
+                "DETAIL_LAPORAN_ID":2,
+                "TGL_MULAI":"2018-05-12",
+                "TGL_AKHIR":"2018-05-14",
+                "CREATED_BY":"Hendrik Budiman",
+                "TOTAL_FOTO":3,
+                "TOTAL_URAIAN":4,
+                "KODE":"B 21332181",
+                "KODE":"B 21332180","PROVINSI_ID":9,
+                "PROVINSI_DESC":"Jawa Barat",
+                "KOTA_ID":2,
+                "KOTA_DESC":"Bandung"
+            },
+            {
+                "DETAIL_LAPORAN_ID":3,
+                "TGL_MULAI":"2018-05-13",
+                "TGL_AKHIR":"2018-05-16",
+                "CREATED_BY":"Hendrik Budiman",
+                "TOTAL_FOTO":3,
+                "TOTAL_URAIAN":4,
+                "KODE":"B 21332190",
+                "KODE":"B 21332180","PROVINSI_ID":9,
+                "PROVINSI_DESC":"Jawa Barat",
+                "KOTA_ID":2,
+                "KOTA_DESC":"Bandung"
+            }
+        ] 
+    }
+]

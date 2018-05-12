@@ -1,0 +1,44 @@
+
+<ion-header>
+
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+  
+      <ion-title>
+          {{ currentData.KODE }}
+      </ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <h5>Informasi</h5>
+  <hr>
+  <h4>{{ currentData.NAMA_KEGIATAN }}</h4>
+  <p>Tahun : <strong>{{ currentYear }}</strong></p>
+  <p>Lokasi : <strong>{{ currentData.PROVINSI_DESC }}, {{ currentData.KOTA_DESC }}</strong></p>
+  <ion-buttons end>
+      <button color="light" ion-button="" small="" end (click)="getDetailKegiatan($event)"><span class="button-inner">Detail Kegiatan</span><div class="button-effect"></div></button>
+  </ion-buttons>
+
+  <br>
+  <p class="text-center">Laporan Perjalanan Dinas Pada Kegiatan ini</p>
+  <ion-list [@listAnimation]="listReport.length">
+      <ion-item *ngFor="let item of currentItems.DETAIL_LAPORAN;let i = index" (click)="getDetailItemLaporan($event, item)">
+          <p>{{ item.TGL_MULAI | date:'dd-MM-yyyy':'+0700' }} - {{ item.TGL_AKHIR | date:'dd-MM-yyyy':'+0700' }}</p>
+          <h2><strong>{{ item.CREATED_BY }}</strong></h2>
+      </ion-item>
+  </ion-list>
+</ion-content>
+
+<!-- Fab Button -->
+<ion-fab #fab bottom right>
+  <button button-ion-fab ion-fab (click)="tambahLaporan($event, currentData)">
+  <ion-icon name="add"></ion-icon>
+</button>
+</ion-fab>
+
+
