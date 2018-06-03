@@ -4,13 +4,111 @@ webpackJsonp([0],{
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return InputLaporanPage; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return KegiatanPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_services_global_service__ = __webpack_require__(19);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_services_kegiatan_service__ = __webpack_require__(24);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_forms__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__kegiatan_subdetail_kegiatan_subdetail__ = __webpack_require__(44);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__kegiatan_detail_kegiatan_detail__ = __webpack_require__(211);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__angular_animations__ = __webpack_require__(31);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+
+var KegiatanPage = /** @class */ (function () {
+    function KegiatanPage(navCtrl, navParams, globalService, kegiatanService) {
+        this.navCtrl = navCtrl;
+        this.navParams = navParams;
+        this.globalService = globalService;
+        this.kegiatanService = kegiatanService;
+        this.provID = '0';
+        this.listProvinsi = [];
+        this.listKegiatan = [];
+        this.labelProv = 'Kegiatan Seluruh Provinsi';
+    }
+    KegiatanPage.prototype.ionViewDidLoad = function () {
+        this.getOptProvinsi();
+        this.getdataKegiatan(this.provID);
+    };
+    KegiatanPage.prototype.getOptProvinsi = function () {
+        var _this = this;
+        this.globalService.getListProvinsi().subscribe(function (data) {
+            _this.listProvinsi = data;
+        });
+    };
+    KegiatanPage.prototype.getdataKegiatan = function (idprov) {
+        var _this = this;
+        if (idprov != 0) {
+            var obj = this.listProvinsi.find(function (obj) { return obj.PROVINSI_ID == idprov; });
+            this.labelProv = 'Kegiatan Provinsi ' + obj.NAMA_PROVINSI;
+        }
+        else {
+            this.labelProv = 'Kegiatan Seluruh Provinsi';
+        }
+        this.kegiatanService.getListKegiatan(idprov).subscribe(function (data) {
+            _this.listKegiatan = data;
+        });
+    };
+    KegiatanPage.prototype.getAllKegiatan = function (event) {
+        event.stopPropagation();
+        console.log('get all kegiatan..');
+    };
+    KegiatanPage.prototype.getDetailKegiatan = function (event, data) {
+        event.stopPropagation();
+        this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_4__kegiatan_detail_kegiatan_detail__["a" /* KegiatanDetailPage */], { item: data });
+    };
+    KegiatanPage = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
+            selector: 'page-kegiatan',template:/*ion-inline-start:"D:\apps\mobilespd\src\pages\kegiatan\kegiatan.html"*/'<ion-header>\n\n  <ion-navbar>\n\n    <button ion-button menuToggle>\n\n      <ion-icon name="menu"></ion-icon>\n\n    </button>\n\n    <ion-title>{{ labelProv }}</ion-title>\n\n  </ion-navbar>\n\n</ion-header>\n\n<ion-content padding>\n\n    <ion-toolbar class="toolbar" no-border>\n\n    <ion-item>\n\n        <ion-label>Provinsi</ion-label>\n\n        <ion-select [ngModel]="provID" (ngModelChange)=\'getdataKegiatan(provID=$event)\' placeholder="Pilih Provinsi">\n\n          <ion-option value="0">Seluruh Provinsi</ion-option>\n\n          <ion-option *ngFor="let prov of listProvinsi;let i = index" value="{{ prov.PROVINSI_ID }}">{{ prov.NAMA_PROVINSI }}</ion-option>\n\n        </ion-select>\n\n      </ion-item>\n\n    </ion-toolbar>\n\n\n\n    <ion-list [@listAnimation]="listKegiatan.length">\n\n        <ion-item *ngIf="(listKegiatan)?.length==0">Maaf, kegiatan masih kosong.</ion-item>\n\n        <ion-item *ngFor="let item of listKegiatan;let i = index" (click)="getDetailKegiatan($event, item)" >\n\n            <ion-grid>\n\n              <ion-row>\n\n                  <ion-col><h3>{{ item.KODE }}</h3></ion-col>\n\n                  <ion-col><h3 align="right">{{ item.KONTRAK }}</h3></ion-col>\n\n              </ion-row>\n\n              <ion-row>\n\n                  <ion-col>\n\n                    <h2>{{ item.NAMA_KEGIATAN }}</h2>\n\n                    <p>{{ item.KOTA_DESC }}, {{ item.PROVINSI_DESC }}</p>\n\n                  </ion-col>\n\n              </ion-row>\n\n            </ion-grid>\n\n        </ion-item>\n\n    </ion-list>\n\n</ion-content>'/*ion-inline-end:"D:\apps\mobilespd\src\pages\kegiatan\kegiatan.html"*/,
+            animations: [
+                Object(__WEBPACK_IMPORTED_MODULE_5__angular_animations__["l" /* trigger */])('listAnimation', [
+                    Object(__WEBPACK_IMPORTED_MODULE_5__angular_animations__["k" /* transition */])('* => *', [
+                        Object(__WEBPACK_IMPORTED_MODULE_5__angular_animations__["g" /* query */])(':enter', Object(__WEBPACK_IMPORTED_MODULE_5__angular_animations__["j" /* style */])({ opacity: 0 }), { optional: true }),
+                        Object(__WEBPACK_IMPORTED_MODULE_5__angular_animations__["g" /* query */])(':enter', Object(__WEBPACK_IMPORTED_MODULE_5__angular_animations__["i" /* stagger */])('300ms', [
+                            Object(__WEBPACK_IMPORTED_MODULE_5__angular_animations__["e" /* animate */])('1s ease-in', Object(__WEBPACK_IMPORTED_MODULE_5__angular_animations__["f" /* keyframes */])([
+                                Object(__WEBPACK_IMPORTED_MODULE_5__angular_animations__["j" /* style */])({ opacity: 0, transform: 'translateY(-75%)', offset: 0 }),
+                                Object(__WEBPACK_IMPORTED_MODULE_5__angular_animations__["j" /* style */])({ opacity: .5, transform: 'translateY(35px)', offset: 0.3 }),
+                                Object(__WEBPACK_IMPORTED_MODULE_5__angular_animations__["j" /* style */])({ opacity: 1, transform: 'translateY(0)', offset: 1.0 }),
+                            ]))
+                        ]), { optional: true })
+                    ])
+                ])
+            ]
+        }),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavParams */],
+            __WEBPACK_IMPORTED_MODULE_2__providers_services_global_service__["a" /* GlobalService */],
+            __WEBPACK_IMPORTED_MODULE_3__providers_services_kegiatan_service__["a" /* KegiatanService */]])
+    ], KegiatanPage);
+    return KegiatanPage;
+}());
+
+//# sourceMappingURL=kegiatan.js.map
+
+/***/ }),
+
+/***/ 109:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return InputLaporanPage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_services_global_service__ = __webpack_require__(19);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_services_kegiatan_service__ = __webpack_require__(24);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_forms__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__kegiatan_subdetail_kegiatan_subdetail__ = __webpack_require__(45);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -40,11 +138,11 @@ var InputLaporanPage = /** @class */ (function () {
             this.currentData = this.navParams.get('item');
         }
         this.lapForm = this.formBuilder.group({
-            no_surat: ['45345', __WEBPACK_IMPORTED_MODULE_4__angular_forms__["f" /* Validators */].required],
-            tgl_mulai: ['', __WEBPACK_IMPORTED_MODULE_4__angular_forms__["f" /* Validators */].required],
-            tgl_akhir: ['', __WEBPACK_IMPORTED_MODULE_4__angular_forms__["f" /* Validators */].required],
-            provinsi_id: ['', __WEBPACK_IMPORTED_MODULE_4__angular_forms__["f" /* Validators */].required],
-            kota_id: ['', __WEBPACK_IMPORTED_MODULE_4__angular_forms__["f" /* Validators */].required]
+            no_surat: ['45345', __WEBPACK_IMPORTED_MODULE_4__angular_forms__["g" /* Validators */].required],
+            tgl_mulai: ['', __WEBPACK_IMPORTED_MODULE_4__angular_forms__["g" /* Validators */].required],
+            tgl_akhir: ['', __WEBPACK_IMPORTED_MODULE_4__angular_forms__["g" /* Validators */].required],
+            provinsi_id: ['', __WEBPACK_IMPORTED_MODULE_4__angular_forms__["g" /* Validators */].required],
+            kota_id: ['', __WEBPACK_IMPORTED_MODULE_4__angular_forms__["g" /* Validators */].required]
         });
     }
     InputLaporanPage.prototype.ionViewDidLoad = function () {
@@ -76,7 +174,7 @@ var InputLaporanPage = /** @class */ (function () {
     };
     InputLaporanPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-input-laporan',template:/*ion-inline-start:"D:\myapps\IONIC\laporanDinas\src\pages\input-laporan\input-laporan.html"*/'<ion-header>\n\n  <ion-navbar>\n    <ion-title>Laporan Perjalanan Dinas</ion-title>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content padding>\n    <form [formGroup]="lapForm" (ngSubmit)="onSubmit()">\n      <ion-list>\n          <ion-item>\n              <ion-label color="primary" stacked>No. Surat Tugas</ion-label>\n              <ion-input type="text" placeholder="Nomor surat" formControlName="no_surat" ngModel></ion-input>\n          </ion-item>\n          <ion-item>\n              <ion-label color="primary" stacked>Tanggal Mulai</ion-label>\n              <ion-datetime placeholder="Tanggal mulai" displayFormat="DD-MM-YYYY" pickerFormat="DD MMMM YYYY" formControlName="tgl_mulai" ngModel></ion-datetime>\n          </ion-item>\n          <ion-item>\n              <ion-label color="primary" stacked>Tanggal Akhir</ion-label>\n              <ion-datetime placeholder="Tanggal akhir" displayFormat="DD-MM-YYYY" pickerFormat="DD MMMM YYYY" formControlName="tgl_akhir" ngModel></ion-datetime>\n          </ion-item>\n          <ion-item>\n              <ion-label color="primary" stacked>Provinsi</ion-label>\n              <ion-select [(ngModel)]="currentData.PROVINSI_ID" formControlName="provinsi_id">\n                <ion-option *ngFor="let prov of listProvinsi;let i=index" value="{{ prov.PROVINSI_ID }}">{{ prov.NAMA_PROVINSI }}</ion-option>\n              </ion-select>\n          </ion-item>\n          <ion-item>\n              <ion-label color="primary" stacked>Kota</ion-label>\n              <ion-select placeholder="Pilih Kota" formControlName="kota_id" ngModel>\n                <ion-option *ngFor="let kota of listKota;let i=index" value="{{ kota.KOTA_ID }}">{{ kota.NAMA_KOTA }}</ion-option>\n              </ion-select>\n            </ion-item>\n      </ion-list>    \n      <ion-buttons>\n        <button ion-button block color="primary" type="submit" [disabled]="!lapForm.valid">Simpan</button>\n        <button ion-button block color="secondary" type="button" (click)="cancel($event)">Batal</button>\n      </ion-buttons>\n    </form>\n</ion-content>\n'/*ion-inline-end:"D:\myapps\IONIC\laporanDinas\src\pages\input-laporan\input-laporan.html"*/,
+            selector: 'page-input-laporan',template:/*ion-inline-start:"D:\apps\mobilespd\src\pages\input-laporan\input-laporan.html"*/'<ion-header>\n\n\n\n  <ion-navbar>\n\n    <ion-title>Laporan Perjalanan Dinas</ion-title>\n\n  </ion-navbar>\n\n\n\n</ion-header>\n\n\n\n\n\n<ion-content padding>\n\n    <form [formGroup]="lapForm" (ngSubmit)="onSubmit()">\n\n      <ion-list>\n\n          <ion-item>\n\n              <ion-label color="primary" stacked>No. Surat Tugas</ion-label>\n\n              <ion-input type="text" placeholder="Nomor surat" formControlName="no_surat" ngModel></ion-input>\n\n          </ion-item>\n\n          <ion-item>\n\n              <ion-label color="primary" stacked>Tanggal Mulai</ion-label>\n\n              <ion-datetime placeholder="Tanggal mulai" displayFormat="DD-MM-YYYY" pickerFormat="DD MMMM YYYY" formControlName="tgl_mulai" ngModel></ion-datetime>\n\n          </ion-item>\n\n          <ion-item>\n\n              <ion-label color="primary" stacked>Tanggal Akhir</ion-label>\n\n              <ion-datetime placeholder="Tanggal akhir" displayFormat="DD-MM-YYYY" pickerFormat="DD MMMM YYYY" formControlName="tgl_akhir" ngModel></ion-datetime>\n\n          </ion-item>\n\n          <ion-item>\n\n              <ion-label color="primary" stacked>Provinsi</ion-label>\n\n              <ion-select [(ngModel)]="currentData.PROVINSI_ID" formControlName="provinsi_id">\n\n                <ion-option *ngFor="let prov of listProvinsi;let i=index" value="{{ prov.PROVINSI_ID }}">{{ prov.NAMA_PROVINSI }}</ion-option>\n\n              </ion-select>\n\n          </ion-item>\n\n          <ion-item>\n\n              <ion-label color="primary" stacked>Kota</ion-label>\n\n              <ion-select placeholder="Pilih Kota" formControlName="kota_id" ngModel>\n\n                <ion-option *ngFor="let kota of listKota;let i=index" value="{{ kota.KOTA_ID }}">{{ kota.NAMA_KOTA }}</ion-option>\n\n              </ion-select>\n\n            </ion-item>\n\n      </ion-list>    \n\n      <ion-buttons>\n\n        <button ion-button block color="primary" type="submit" [disabled]="!lapForm.valid">Simpan</button>\n\n        <button ion-button block color="secondary" type="button" (click)="cancel($event)">Batal</button>\n\n      </ion-buttons>\n\n    </form>\n\n</ion-content>\n\n'/*ion-inline-end:"D:\apps\mobilespd\src\pages\input-laporan\input-laporan.html"*/,
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */],
             __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavParams */],
@@ -91,19 +189,19 @@ var InputLaporanPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 109:
+/***/ 110:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return DaftarLaporanPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(10);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_animations__ = __webpack_require__(30);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_animations__ = __webpack_require__(31);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_services_global_service__ = __webpack_require__(19);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_services_kegiatan_service__ = __webpack_require__(24);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__input_laporan_input_laporan__ = __webpack_require__(108);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__kegiatan_subdetail_kegiatan_subdetail__ = __webpack_require__(44);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__kegiatan_subdetail2_kegiatan_subdetail2__ = __webpack_require__(110);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__input_laporan_input_laporan__ = __webpack_require__(109);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__kegiatan_subdetail_kegiatan_subdetail__ = __webpack_require__(45);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__kegiatan_subdetail2_kegiatan_subdetail2__ = __webpack_require__(111);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -196,7 +294,7 @@ var DaftarLaporanPage = /** @class */ (function () {
     };
     DaftarLaporanPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-daftar-laporan',template:/*ion-inline-start:"D:\myapps\IONIC\laporanDinas\src\pages\daftar-laporan\daftar-laporan.html"*/'<ion-header>\n  <ion-navbar>\n      <button ion-button menuToggle>\n        <ion-icon name="menu"></ion-icon>\n      </button>\n        <ion-title>\n            Daftar Laporan Kegiatan\n        </ion-title>\n    </ion-navbar>\n  \n  </ion-header>\n  \n  \n  <ion-content padding>\n      <ion-grid>\n          <ion-row>\n              <ion-col>\n                  <ion-select [(ngModel)]="nowMonth" placeholder="Pilih Bulan" (ngModelChange)="getItemLaporan($event)">\n                    <ion-option *ngFor="let month of optMonth;let i=index" value="{{ month.val }}">{{ month.text }}</ion-option>\n                  </ion-select>\n              </ion-col>\n              <ion-col>\n                  <ion-select [(ngModel)]="nomYear" placeholder="Pilih Tahun" (ngModelChange)="getItemLaporan($event)">\n                    <ion-option *ngFor="let year of optYear;let i=index" value="{{ year }}">{{ year }}</ion-option>\n                  </ion-select>\n              </ion-col>\n            </ion-row>\n      </ion-grid>\n    <ion-list [@listAnimation]="listLaporan.length">\n        <ion-item *ngFor="let item of listLaporan;let i = index" (click)="getDetailItemLaporan($event, item)">\n            <ion-grid>\n                <ion-row>\n                    <ion-col><h3>{{ item.TGL_MULAI | date:\'dd-MM-yyyy\':\'+0700\' }} - {{ item.TGL_AKHIR | date:\'dd-MM-yyyy\':\'+0700\' }}</h3></ion-col>\n                    <ion-col><h3 align="right"><strong>{{ item.KODE }}</strong></h3></ion-col>\n                </ion-row>\n                <ion-row>\n                    <ion-col>\n                      <strong>{{ item.KOTA_DESC }}, {{ item.PROVINSI_DESC }}</strong>\n                    </ion-col>\n                </ion-row>\n              </ion-grid>\n        </ion-item>\n        \n    </ion-list>\n  </ion-content>  '/*ion-inline-end:"D:\myapps\IONIC\laporanDinas\src\pages\daftar-laporan\daftar-laporan.html"*/,
+            selector: 'page-daftar-laporan',template:/*ion-inline-start:"D:\apps\mobilespd\src\pages\daftar-laporan\daftar-laporan.html"*/'<ion-header>\n\n  <ion-navbar>\n\n      <button ion-button menuToggle>\n\n        <ion-icon name="menu"></ion-icon>\n\n      </button>\n\n        <ion-title>\n\n            Daftar Laporan Kegiatan\n\n        </ion-title>\n\n    </ion-navbar>\n\n  \n\n  </ion-header>\n\n  \n\n  \n\n  <ion-content padding>\n\n      <ion-grid>\n\n          <ion-row>\n\n              <ion-col>\n\n                  <ion-select [(ngModel)]="nowMonth" placeholder="Pilih Bulan" (ngModelChange)="getItemLaporan($event)">\n\n                    <ion-option *ngFor="let month of optMonth;let i=index" value="{{ month.val }}">{{ month.text }}</ion-option>\n\n                  </ion-select>\n\n              </ion-col>\n\n              <ion-col>\n\n                  <ion-select [(ngModel)]="nomYear" placeholder="Pilih Tahun" (ngModelChange)="getItemLaporan($event)">\n\n                    <ion-option *ngFor="let year of optYear;let i=index" value="{{ year }}">{{ year }}</ion-option>\n\n                  </ion-select>\n\n              </ion-col>\n\n            </ion-row>\n\n      </ion-grid>\n\n    <ion-list [@listAnimation]="listLaporan.length">\n\n        <ion-item *ngFor="let item of listLaporan;let i = index" (click)="getDetailItemLaporan($event, item)">\n\n            <ion-grid>\n\n                <ion-row>\n\n                    <ion-col><h3>{{ item.TGL_MULAI | date:\'dd-MM-yyyy\':\'+0700\' }} - {{ item.TGL_AKHIR | date:\'dd-MM-yyyy\':\'+0700\' }}</h3></ion-col>\n\n                    <ion-col><h3 align="right"><strong>{{ item.KODE }}</strong></h3></ion-col>\n\n                </ion-row>\n\n                <ion-row>\n\n                    <ion-col>\n\n                      <strong>{{ item.KOTA_DESC }}, {{ item.PROVINSI_DESC }}</strong>\n\n                    </ion-col>\n\n                </ion-row>\n\n              </ion-grid>\n\n        </ion-item>\n\n        \n\n    </ion-list>\n\n  </ion-content>  '/*ion-inline-end:"D:\apps\mobilespd\src\pages\daftar-laporan\daftar-laporan.html"*/,
             animations: [
                 Object(__WEBPACK_IMPORTED_MODULE_2__angular_animations__["l" /* trigger */])('listAnimation', [
                     Object(__WEBPACK_IMPORTED_MODULE_2__angular_animations__["k" /* transition */])('* => *', [
@@ -224,14 +322,14 @@ var DaftarLaporanPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 110:
+/***/ 111:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return KegiatanSubdetail2Page; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(10);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__kegiatan_subdetail_kegiatan_subdetail__ = __webpack_require__(44);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__kegiatan_subdetail_kegiatan_subdetail__ = __webpack_require__(45);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -264,7 +362,7 @@ var KegiatanSubdetail2Page = /** @class */ (function () {
     };
     KegiatanSubdetail2Page = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-kegiatan-subdetail2',template:/*ion-inline-start:"D:\myapps\IONIC\laporanDinas\src\pages\kegiatan-subdetail2\kegiatan-subdetail2.html"*/'\n<ion-header>\n    <ion-navbar>\n      <button ion-button menuToggle>\n        <ion-icon name="menu"></ion-icon>\n      </button>\n    \n        <ion-title>\n            {{ currentData.KODE }}\n        </ion-title>\n    </ion-navbar>\n  \n  </ion-header>\n  \n  \n  <ion-content padding>\n    <h5>Informasi</h5>\n    <hr>\n    <h4>{{ currentData.NAMA_KEGIATAN }}</h4>\n    <ion-grid>\n        <ion-row>\n          <ion-col>\n              <p>Kontrak : <br><strong>{{ currentData.KONTRAK }}</strong></p>\n          </ion-col>\n          <ion-col>\n              <p>Tahun : <br><strong>{{ currentYear }}</strong></p>\n          </ion-col>\n        </ion-row>\n        <ion-row>\n            <ion-col>\n                <p>Lokasi : <br><strong>{{ currentData.PROVINSI_DESC }}, {{ currentData.KOTA_DESC }}</strong></p>\n            </ion-col>\n        </ion-row>\n        <ion-row>\n            <ion-col>\n                <p>Rencana Lelang : <br><strong>{{ currentData.RENCANA_LELANG | date:\'dd MMMM yyyy\':\'+0700\' }}</strong></p>\n            </ion-col>\n            <ion-col>\n                <p>Rencana Kontrak : <br><strong>{{ currentData.RENCANA_KONTRAK | date:\'dd MMM yyyy\':\'+0700\' }}</strong></p>\n            </ion-col>\n          </ion-row>\n          <ion-row>\n              <ion-col>\n                  <p>Pagu RKAKL : <br><strong>{{ currentData.PAGU_RKAKL | currency:\'Rp. \' }}</strong></p>\n              </ion-col>\n              <ion-col>\n                  <p>Pagu RKAKL : <br><strong>{{ currentData.PAGU_RKAKL | currency:\'Rp. \' }}</strong></p>\n              </ion-col>\n            </ion-row>\n            <ion-row>\n                <ion-col>\n                    <p>PHO : <br><strong>{{ currentData.PHO | date:\'dd MMM yyyy\':\'+0700\' }}</strong></p>\n                </ion-col>\n            </ion-row>\n      </ion-grid>\n    \n    <ion-buttons>\n        <button color="primary" ion-button="" small="" (click)="lihatLaporan($event)"><span class="button-inner">Lihat Laporan</span><div class="button-effect"></div></button>\n    </ion-buttons>\n    <br>\n  </ion-content>  '/*ion-inline-end:"D:\myapps\IONIC\laporanDinas\src\pages\kegiatan-subdetail2\kegiatan-subdetail2.html"*/,
+            selector: 'page-kegiatan-subdetail2',template:/*ion-inline-start:"D:\apps\mobilespd\src\pages\kegiatan-subdetail2\kegiatan-subdetail2.html"*/'\n\n<ion-header>\n\n    <ion-navbar>\n\n      <button ion-button menuToggle>\n\n        <ion-icon name="menu"></ion-icon>\n\n      </button>\n\n    \n\n        <ion-title>\n\n            {{ currentData.KODE }}\n\n        </ion-title>\n\n    </ion-navbar>\n\n  \n\n  </ion-header>\n\n  \n\n  \n\n  <ion-content padding>\n\n    <h5>Informasi</h5>\n\n    <hr>\n\n    <h4>{{ currentData.NAMA_KEGIATAN }}</h4>\n\n    <ion-grid>\n\n        <ion-row>\n\n          <ion-col>\n\n              <p>Kontrak : <br><strong>{{ currentData.KONTRAK }}</strong></p>\n\n          </ion-col>\n\n          <ion-col>\n\n              <p>Tahun : <br><strong>{{ currentYear }}</strong></p>\n\n          </ion-col>\n\n        </ion-row>\n\n        <ion-row>\n\n            <ion-col>\n\n                <p>Lokasi : <br><strong>{{ currentData.PROVINSI_DESC }}, {{ currentData.KOTA_DESC }}</strong></p>\n\n            </ion-col>\n\n        </ion-row>\n\n        <ion-row>\n\n            <ion-col>\n\n                <p>Rencana Lelang : <br><strong>{{ currentData.RENCANA_LELANG | date:\'dd MMMM yyyy\':\'+0700\' }}</strong></p>\n\n            </ion-col>\n\n            <ion-col>\n\n                <p>Rencana Kontrak : <br><strong>{{ currentData.RENCANA_KONTRAK | date:\'dd MMM yyyy\':\'+0700\' }}</strong></p>\n\n            </ion-col>\n\n          </ion-row>\n\n          <ion-row>\n\n              <ion-col>\n\n                  <p>Pagu RKAKL : <br><strong>{{ currentData.PAGU_RKAKL | currency:\'Rp. \' }}</strong></p>\n\n              </ion-col>\n\n              <ion-col>\n\n                  <p>Pagu RKAKL : <br><strong>{{ currentData.PAGU_RKAKL | currency:\'Rp. \' }}</strong></p>\n\n              </ion-col>\n\n            </ion-row>\n\n            <ion-row>\n\n                <ion-col>\n\n                    <p>PHO : <br><strong>{{ currentData.PHO | date:\'dd MMM yyyy\':\'+0700\' }}</strong></p>\n\n                </ion-col>\n\n            </ion-row>\n\n      </ion-grid>\n\n    \n\n    <ion-buttons>\n\n        <button color="primary" ion-button="" small="" (click)="lihatLaporan($event)"><span class="button-inner">Lihat Laporan</span><div class="button-effect"></div></button>\n\n    </ion-buttons>\n\n    <br>\n\n  </ion-content>  '/*ion-inline-end:"D:\apps\mobilespd\src\pages\kegiatan-subdetail2\kegiatan-subdetail2.html"*/,
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavParams */]])
     ], KegiatanSubdetail2Page);
@@ -275,7 +373,7 @@ var KegiatanSubdetail2Page = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 121:
+/***/ 122:
 /***/ (function(module, exports) {
 
 function webpackEmptyAsyncContext(req) {
@@ -288,11 +386,11 @@ function webpackEmptyAsyncContext(req) {
 webpackEmptyAsyncContext.keys = function() { return []; };
 webpackEmptyAsyncContext.resolve = webpackEmptyAsyncContext;
 module.exports = webpackEmptyAsyncContext;
-webpackEmptyAsyncContext.id = 121;
+webpackEmptyAsyncContext.id = 122;
 
 /***/ }),
 
-/***/ 162:
+/***/ 163:
 /***/ (function(module, exports) {
 
 function webpackEmptyAsyncContext(req) {
@@ -305,7 +403,7 @@ function webpackEmptyAsyncContext(req) {
 webpackEmptyAsyncContext.keys = function() { return []; };
 webpackEmptyAsyncContext.resolve = webpackEmptyAsyncContext;
 module.exports = webpackEmptyAsyncContext;
-webpackEmptyAsyncContext.id = 162;
+webpackEmptyAsyncContext.id = 163;
 
 /***/ }),
 
@@ -316,13 +414,13 @@ webpackEmptyAsyncContext.id = 162;
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return GlobalService; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_common_http__ = __webpack_require__(105);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(10);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_storage__ = __webpack_require__(47);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_catch__ = __webpack_require__(206);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_storage__ = __webpack_require__(38);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_catch__ = __webpack_require__(208);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_catch___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_catch__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_do__ = __webpack_require__(207);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_do__ = __webpack_require__(209);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_do___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_do__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_rxjs_add_operator_map__ = __webpack_require__(208);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_rxjs_add_operator_map__ = __webpack_require__(210);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_rxjs_add_operator_map__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -420,17 +518,17 @@ var GlobalService = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 205:
+/***/ 207:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return LoginPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_services_global_service__ = __webpack_require__(19);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_storage__ = __webpack_require__(47);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_forms__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__kegiatan_kegiatan__ = __webpack_require__(209);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_storage__ = __webpack_require__(38);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_forms__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__kegiatan_kegiatan__ = __webpack_require__(108);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -461,8 +559,8 @@ var LoginPage = /** @class */ (function () {
     };
     LoginPage.prototype.resetform = function () {
         this.credential = this.formBuilder.group({
-            username: ['', __WEBPACK_IMPORTED_MODULE_4__angular_forms__["f" /* Validators */].required],
-            password: ['', __WEBPACK_IMPORTED_MODULE_4__angular_forms__["f" /* Validators */].required]
+            username: ['', __WEBPACK_IMPORTED_MODULE_4__angular_forms__["g" /* Validators */].required],
+            password: ['', __WEBPACK_IMPORTED_MODULE_4__angular_forms__["g" /* Validators */].required]
         });
     };
     LoginPage.prototype.login = function () {
@@ -477,129 +575,32 @@ var LoginPage = /** @class */ (function () {
     };
     LoginPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-login',template:/*ion-inline-start:"D:\myapps\IONIC\laporanDinas\src\pages\login\login.html"*/'  <!-- <ion-content>\n  \n    <form [formGroup]="credential" (ngSubmit)="login()">\n      <ion-list>\n  \n        <ion-item>\n          <ion-label floating>Username</ion-label>\n          <ion-input type="text" formControlName="username" ngModel></ion-input>\n        </ion-item>\n  \n        <ion-item>\n          <ion-label floating>Password</ion-label>\n          <ion-input type="password" formControlName="password" ngModel></ion-input>\n        </ion-item>  \n      </ion-list>\n      <ion-buttons>\n          <button ion-button block color="primary" type="submit" [disabled]="!credential.valid">Login</button>\n        </ion-buttons>\n    </form>\n  \n  </ion-content> -->\n\n<!-- Themes Login + logo -->\n<ion-content has-header white-background>\n    <ion-grid>\n        <form [formGroup]="credential" (ngSubmit)="login()">\n          <ion-row wrap padding>\n            <ion-col col-12 col-sm-12 col-md-12 offset-lg-3 col-lg-6 offset-xl-3 col-xl-6>\n                <!---Logo-->\n                <!-- <img [src]="data.logo" *ngIf="data.logo != null"> -->\n                <!---Input field username-->\n                <ion-item no-padding transparent>\n                    <ion-label floating>Username</ion-label>\n                    <ion-input type="text" formControlName="username" ngModel></ion-input>\n                </ion-item>\n                <!---Input field password-->\n                <ion-item no-padding transparent>\n                    <ion-label floating>Password</ion-label>\n                    <ion-input type="password" formControlName="password" ngModel></ion-input>\n                </ion-item>\n                <!---Login button-->\n                <button ion-button button-clear-outline round block outline type="submit" [disabled]="!credential.valid">Login</button>\n            </ion-col>\n        </ion-row>\n        </form>\n    </ion-grid>\n</ion-content>\n'/*ion-inline-end:"D:\myapps\IONIC\laporanDinas\src\pages\login\login.html"*/,
+            selector: 'page-login',template:/*ion-inline-start:"D:\apps\mobilespd\src\pages\login\login.html"*/'  <!-- <ion-content>\n\n  \n\n    <form [formGroup]="credential" (ngSubmit)="login()">\n\n      <ion-list>\n\n  \n\n        <ion-item>\n\n          <ion-label floating>Username</ion-label>\n\n          <ion-input type="text" formControlName="username" ngModel></ion-input>\n\n        </ion-item>\n\n  \n\n        <ion-item>\n\n          <ion-label floating>Password</ion-label>\n\n          <ion-input type="password" formControlName="password" ngModel></ion-input>\n\n        </ion-item>  \n\n      </ion-list>\n\n      <ion-buttons>\n\n          <button ion-button block color="primary" type="submit" [disabled]="!credential.valid">Login</button>\n\n        </ion-buttons>\n\n    </form>\n\n  \n\n  </ion-content> -->\n\n\n\n<!-- Themes Login + logo -->\n\n<ion-content has-header white-background>\n\n    <ion-grid>\n\n        <form [formGroup]="credential" (ngSubmit)="login()">\n\n          <ion-row wrap padding>\n\n            <ion-col col-12 col-sm-12 col-md-12 offset-lg-3 col-lg-6 offset-xl-3 col-xl-6>\n\n                <!---Logo-->\n\n                <!-- <img [src]="data.logo" *ngIf="data.logo != null"> -->\n\n                <!---Input field username-->\n\n                <ion-item no-padding transparent>\n\n                    <ion-label floating>Username</ion-label>\n\n                    <ion-input type="text" formControlName="username" ngModel></ion-input>\n\n                </ion-item>\n\n                <!---Input field password-->\n\n                <ion-item no-padding transparent>\n\n                    <ion-label floating>Password</ion-label>\n\n                    <ion-input type="password" formControlName="password" ngModel></ion-input>\n\n                </ion-item>\n\n                <!---Login button-->\n\n                <button ion-button button-clear-outline round block outline type="submit" [disabled]="!credential.valid">Login</button>\n\n            </ion-col>\n\n        </ion-row>\n\n        </form>\n\n    </ion-grid>\n\n</ion-content>\n\n'/*ion-inline-end:"D:\apps\mobilespd\src\pages\login\login.html"*/,
         }),
-        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavParams */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_3__ionic_storage__["b" /* Storage */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__ionic_storage__["b" /* Storage */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_2__providers_services_global_service__["a" /* GlobalService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__providers_services_global_service__["a" /* GlobalService */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_4__angular_forms__["a" /* FormBuilder */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__angular_forms__["a" /* FormBuilder */]) === "function" && _e || Object])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavParams */],
+            __WEBPACK_IMPORTED_MODULE_3__ionic_storage__["b" /* Storage */], __WEBPACK_IMPORTED_MODULE_2__providers_services_global_service__["a" /* GlobalService */],
+            __WEBPACK_IMPORTED_MODULE_4__angular_forms__["a" /* FormBuilder */]])
     ], LoginPage);
     return LoginPage;
-    var _a, _b, _c, _d, _e;
 }());
 
 //# sourceMappingURL=login.js.map
 
 /***/ }),
 
-/***/ 209:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return KegiatanPage; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(10);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_services_global_service__ = __webpack_require__(19);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_services_kegiatan_service__ = __webpack_require__(24);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__kegiatan_detail_kegiatan_detail__ = __webpack_require__(210);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__angular_animations__ = __webpack_require__(30);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-
-
-
-
-var KegiatanPage = /** @class */ (function () {
-    function KegiatanPage(navCtrl, navParams, globalService, kegiatanService) {
-        this.navCtrl = navCtrl;
-        this.navParams = navParams;
-        this.globalService = globalService;
-        this.kegiatanService = kegiatanService;
-        this.provID = '0';
-        this.listProvinsi = [];
-        this.listKegiatan = [];
-        this.labelProv = 'Kegiatan Seluruh Provinsi';
-    }
-    KegiatanPage.prototype.ionViewDidLoad = function () {
-        this.getOptProvinsi();
-        this.getdataKegiatan(this.provID);
-    };
-    KegiatanPage.prototype.getOptProvinsi = function () {
-        var _this = this;
-        this.globalService.getListProvinsi().subscribe(function (data) {
-            _this.listProvinsi = data;
-        });
-    };
-    KegiatanPage.prototype.getdataKegiatan = function (idprov) {
-        var _this = this;
-        if (idprov != 0) {
-            var obj = this.listProvinsi.find(function (obj) { return obj.PROVINSI_ID == idprov; });
-            this.labelProv = 'Kegiatan Provinsi ' + obj.NAMA_PROVINSI;
-        }
-        else {
-            this.labelProv = 'Kegiatan Seluruh Provinsi';
-        }
-        this.kegiatanService.getListKegiatan(idprov).subscribe(function (data) {
-            _this.listKegiatan = data;
-        });
-    };
-    KegiatanPage.prototype.getAllKegiatan = function (event) {
-        event.stopPropagation();
-        console.log('get all kegiatan..');
-    };
-    KegiatanPage.prototype.getDetailKegiatan = function (event, data) {
-        event.stopPropagation();
-        this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_4__kegiatan_detail_kegiatan_detail__["a" /* KegiatanDetailPage */], { item: data });
-    };
-    KegiatanPage = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-kegiatan',template:/*ion-inline-start:"D:\myapps\IONIC\laporanDinas\src\pages\kegiatan\kegiatan.html"*/'<ion-header>\n  <ion-navbar>\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    <ion-title>{{ labelProv }}</ion-title>\n  </ion-navbar>\n</ion-header>\n<ion-content padding>\n    <ion-toolbar class="toolbar" no-border>\n    <ion-item>\n        <ion-label>Provinsi</ion-label>\n        <ion-select [ngModel]="provID" (ngModelChange)=\'getdataKegiatan(provID=$event)\' placeholder="Pilih Provinsi">\n          <ion-option value="0">Seluruh Provinsi</ion-option>\n          <ion-option *ngFor="let prov of listProvinsi;let i = index" value="{{ prov.PROVINSI_ID }}">{{ prov.NAMA_PROVINSI }}</ion-option>\n        </ion-select>\n      </ion-item>\n    </ion-toolbar>\n\n    <ion-list [@listAnimation]="listKegiatan.length">\n        <ion-item *ngIf="(listKegiatan)?.length==0">Maaf, kegiatan masih kosong.</ion-item>\n        <ion-item *ngFor="let item of listKegiatan;let i = index" (click)="getDetailKegiatan($event, item)" >\n            <ion-grid>\n              <ion-row>\n                  <ion-col><h3>{{ item.KODE }}</h3></ion-col>\n                  <ion-col><h3 align="right">{{ item.KONTRAK }}</h3></ion-col>\n              </ion-row>\n              <ion-row>\n                  <ion-col>\n                    <h2>{{ item.NAMA_KEGIATAN }}</h2>\n                    <p>{{ item.KOTA_DESC }}, {{ item.PROVINSI_DESC }}</p>\n                  </ion-col>\n              </ion-row>\n            </ion-grid>\n        </ion-item>\n    </ion-list>\n</ion-content>'/*ion-inline-end:"D:\myapps\IONIC\laporanDinas\src\pages\kegiatan\kegiatan.html"*/,
-            animations: [
-                Object(__WEBPACK_IMPORTED_MODULE_5__angular_animations__["l" /* trigger */])('listAnimation', [
-                    Object(__WEBPACK_IMPORTED_MODULE_5__angular_animations__["k" /* transition */])('* => *', [
-                        Object(__WEBPACK_IMPORTED_MODULE_5__angular_animations__["g" /* query */])(':enter', Object(__WEBPACK_IMPORTED_MODULE_5__angular_animations__["j" /* style */])({ opacity: 0 }), { optional: true }),
-                        Object(__WEBPACK_IMPORTED_MODULE_5__angular_animations__["g" /* query */])(':enter', Object(__WEBPACK_IMPORTED_MODULE_5__angular_animations__["i" /* stagger */])('300ms', [
-                            Object(__WEBPACK_IMPORTED_MODULE_5__angular_animations__["e" /* animate */])('1s ease-in', Object(__WEBPACK_IMPORTED_MODULE_5__angular_animations__["f" /* keyframes */])([
-                                Object(__WEBPACK_IMPORTED_MODULE_5__angular_animations__["j" /* style */])({ opacity: 0, transform: 'translateY(-75%)', offset: 0 }),
-                                Object(__WEBPACK_IMPORTED_MODULE_5__angular_animations__["j" /* style */])({ opacity: .5, transform: 'translateY(35px)', offset: 0.3 }),
-                                Object(__WEBPACK_IMPORTED_MODULE_5__angular_animations__["j" /* style */])({ opacity: 1, transform: 'translateY(0)', offset: 1.0 }),
-                            ]))
-                        ]), { optional: true })
-                    ])
-                ])
-            ]
-        }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */],
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavParams */],
-            __WEBPACK_IMPORTED_MODULE_2__providers_services_global_service__["a" /* GlobalService */],
-            __WEBPACK_IMPORTED_MODULE_3__providers_services_kegiatan_service__["a" /* KegiatanService */]])
-    ], KegiatanPage);
-    return KegiatanPage;
-}());
-
-//# sourceMappingURL=kegiatan.js.map
-
-/***/ }),
-
-/***/ 210:
+/***/ 211:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return KegiatanDetailPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(10);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_animations__ = __webpack_require__(30);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_animations__ = __webpack_require__(31);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_services_global_service__ = __webpack_require__(19);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_services_kegiatan_service__ = __webpack_require__(24);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__input_laporan_input_laporan__ = __webpack_require__(108);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__kegiatan_subdetail_kegiatan_subdetail__ = __webpack_require__(44);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__kegiatan_subdetail2_kegiatan_subdetail2__ = __webpack_require__(110);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__input_laporan_input_laporan__ = __webpack_require__(109);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__kegiatan_subdetail_kegiatan_subdetail__ = __webpack_require__(45);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__kegiatan_subdetail2_kegiatan_subdetail2__ = __webpack_require__(111);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -669,7 +670,7 @@ var KegiatanDetailPage = /** @class */ (function () {
     };
     KegiatanDetailPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-kegiatan-detail',template:/*ion-inline-start:"D:\myapps\IONIC\laporanDinas\src\pages\kegiatan-detail\kegiatan-detail.html"*/'\n<ion-header>\n\n  <ion-navbar>\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n  \n      <ion-title>\n          {{ currentData.KODE }}\n      </ion-title>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content padding>\n  <h5>Informasi</h5>\n  <hr>\n  <h4>{{ currentData.NAMA_KEGIATAN }}</h4>\n  <p>Tahun : <strong>{{ currentYear }}</strong></p>\n  <p>Lokasi : <strong>{{ currentData.PROVINSI_DESC }}, {{ currentData.KOTA_DESC }}</strong></p>\n  <ion-buttons end>\n      <button color="light" ion-button="" small="" end (click)="getDetailKegiatan($event)"><span class="button-inner">Detail Kegiatan</span><div class="button-effect"></div></button>\n  </ion-buttons>\n\n  <br>\n  <p class="text-center">Laporan Perjalanan Dinas Pada Kegiatan ini</p>\n  <ion-list [@listAnimation]="listReport.length">\n      <ion-item *ngFor="let item of currentItems.DETAIL_LAPORAN;let i = index" (click)="getDetailItemLaporan($event, item)">\n          <p>{{ item.TGL_MULAI | date:\'dd-MM-yyyy\':\'+0700\' }} - {{ item.TGL_AKHIR | date:\'dd-MM-yyyy\':\'+0700\' }}</p>\n          <h2><strong>{{ item.CREATED_BY }}</strong></h2>\n      </ion-item>\n  </ion-list>\n</ion-content>\n\n<!-- Fab Button -->\n<ion-fab #fab bottom right>\n  <button button-ion-fab ion-fab (click)="tambahLaporan($event, currentData)">\n  <ion-icon name="add"></ion-icon>\n</button>\n</ion-fab>\n\n\n'/*ion-inline-end:"D:\myapps\IONIC\laporanDinas\src\pages\kegiatan-detail\kegiatan-detail.html"*/,
+            selector: 'page-kegiatan-detail',template:/*ion-inline-start:"D:\apps\mobilespd\src\pages\kegiatan-detail\kegiatan-detail.html"*/'\n\n<ion-header>\n\n\n\n  <ion-navbar>\n\n    <button ion-button menuToggle>\n\n      <ion-icon name="menu"></ion-icon>\n\n    </button>\n\n  \n\n      <ion-title>\n\n          {{ currentData.KODE }}\n\n      </ion-title>\n\n  </ion-navbar>\n\n\n\n</ion-header>\n\n\n\n\n\n<ion-content padding>\n\n  <h5>Informasi</h5>\n\n  <hr>\n\n  <h4>{{ currentData.NAMA_KEGIATAN }}</h4>\n\n  <p>Tahun : <strong>{{ currentYear }}</strong></p>\n\n  <p>Lokasi : <strong>{{ currentData.PROVINSI_DESC }}, {{ currentData.KOTA_DESC }}</strong></p>\n\n  <ion-buttons end>\n\n      <button color="light" ion-button="" small="" end (click)="getDetailKegiatan($event)"><span class="button-inner">Detail Kegiatan</span><div class="button-effect"></div></button>\n\n  </ion-buttons>\n\n\n\n  <br>\n\n  <p class="text-center">Laporan Perjalanan Dinas Pada Kegiatan ini</p>\n\n  <ion-list [@listAnimation]="listReport.length">\n\n      <ion-item *ngFor="let item of currentItems.DETAIL_LAPORAN;let i = index" (click)="getDetailItemLaporan($event, item)">\n\n          <p>{{ item.TGL_MULAI | date:\'dd-MM-yyyy\':\'+0700\' }} - {{ item.TGL_AKHIR | date:\'dd-MM-yyyy\':\'+0700\' }}</p>\n\n          <h2><strong>{{ item.CREATED_BY }}</strong></h2>\n\n      </ion-item>\n\n  </ion-list>\n\n</ion-content>\n\n\n\n<!-- Fab Button -->\n\n<ion-fab #fab bottom right>\n\n  <button button-ion-fab ion-fab (click)="tambahLaporan($event, currentData)">\n\n  <ion-icon name="add"></ion-icon>\n\n</button>\n\n</ion-fab>\n\n\n\n\n\n'/*ion-inline-end:"D:\apps\mobilespd\src\pages\kegiatan-detail\kegiatan-detail.html"*/,
             animations: [
                 Object(__WEBPACK_IMPORTED_MODULE_2__angular_animations__["l" /* trigger */])('listAnimation', [
                     Object(__WEBPACK_IMPORTED_MODULE_2__angular_animations__["k" /* transition */])('* => *', [
@@ -697,18 +698,18 @@ var KegiatanDetailPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 211:
+/***/ 212:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return KegiatanFotoPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_animations__ = __webpack_require__(30);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_animations__ = __webpack_require__(31);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_services_global_service__ = __webpack_require__(19);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_services_kegiatan_service__ = __webpack_require__(24);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__camera_camera__ = __webpack_require__(212);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__daftar_laporan_daftar_laporan__ = __webpack_require__(109);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__camera_camera__ = __webpack_require__(213);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__daftar_laporan_daftar_laporan__ = __webpack_require__(110);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -764,7 +765,7 @@ var KegiatanFotoPage = /** @class */ (function () {
     };
     KegiatanFotoPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-kegiatan-foto',template:/*ion-inline-start:"D:\myapps\IONIC\laporanDinas\src\pages\kegiatan-foto\kegiatan-foto.html"*/'<ion-header>\n\n  <ion-navbar>\n    <ion-title>Foto Kegiatan</ion-title>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content padding>\n  <ion-list [@listAnimation]="arrDataFoto.length">\n    <ion-item *ngFor="let foto of arrDataFoto;let i = index" (click)="lihatLaporan($event, foto)">\n        <img src="{{ foto.IMG_PATH }}">\n      <p text-wrap>{{ foto.CAPTION }}</p>\n    </ion-item>\n  </ion-list>\n</ion-content>\n\n<!-- Fab Button -->\n<ion-fab #fab bottom right>\n  <button button-ion-fab ion-fab (click)="ambilFoto($event)">\n    <ion-icon class="icon" name="camera"></ion-icon>\n</button>\n</ion-fab>\n'/*ion-inline-end:"D:\myapps\IONIC\laporanDinas\src\pages\kegiatan-foto\kegiatan-foto.html"*/,
+            selector: 'page-kegiatan-foto',template:/*ion-inline-start:"D:\apps\mobilespd\src\pages\kegiatan-foto\kegiatan-foto.html"*/'<ion-header>\n\n\n\n  <ion-navbar>\n\n    <ion-title>Foto Kegiatan</ion-title>\n\n  </ion-navbar>\n\n\n\n</ion-header>\n\n\n\n\n\n<ion-content padding>\n\n  <ion-list [@listAnimation]="arrDataFoto.length">\n\n    <ion-item *ngFor="let foto of arrDataFoto;let i = index" (click)="lihatLaporan($event, foto)">\n\n        <img src="{{ foto.IMG_PATH }}">\n\n      <p text-wrap>{{ foto.CAPTION }}</p>\n\n    </ion-item>\n\n  </ion-list>\n\n</ion-content>\n\n\n\n<!-- Fab Button -->\n\n<ion-fab #fab bottom right>\n\n  <button button-ion-fab ion-fab (click)="ambilFoto($event)">\n\n    <ion-icon class="icon" name="camera"></ion-icon>\n\n</button>\n\n</ion-fab>\n\n'/*ion-inline-end:"D:\apps\mobilespd\src\pages\kegiatan-foto\kegiatan-foto.html"*/,
             animations: [
                 Object(__WEBPACK_IMPORTED_MODULE_1__angular_animations__["l" /* trigger */])('listAnimation', [
                     Object(__WEBPACK_IMPORTED_MODULE_1__angular_animations__["k" /* transition */])('* => *', [
@@ -792,17 +793,17 @@ var KegiatanFotoPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 212:
+/***/ 213:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CameraPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(10);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_native_camera__ = __webpack_require__(213);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_native_camera__ = __webpack_require__(214);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_services_global_service__ = __webpack_require__(19);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_services_kegiatan_service__ = __webpack_require__(24);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__angular_forms__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__angular_forms__ = __webpack_require__(10);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -834,7 +835,7 @@ var CameraPage = /** @class */ (function () {
             console.log(this.currentData);
         }
         this.uploadForm = this.formBuilder.group({
-            caption: ['', __WEBPACK_IMPORTED_MODULE_5__angular_forms__["f" /* Validators */].required]
+            caption: ['', __WEBPACK_IMPORTED_MODULE_5__angular_forms__["g" /* Validators */].required]
         });
     }
     CameraPage.prototype.ionViewDidLoad = function () {
@@ -872,7 +873,7 @@ var CameraPage = /** @class */ (function () {
     };
     CameraPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-camera',template:/*ion-inline-start:"D:\myapps\IONIC\laporanDinas\src\pages\camera\camera.html"*/'<ion-header>\n\n  <ion-navbar>\n    <ion-title>Ambil Gambar Foto</ion-title>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content padding>\n    <ion-img class="imageCam img-responsive" style="width: 100%; height: 85%;" src="{{ imgCam }}"></ion-img>\n    <br>\n    <form [formGroup]="uploadForm" (ngSubmit)="onSubmit()">\n        <ion-list>\n            <ion-item>\n                <ion-label color="primary" stacked>Komentar</ion-label>\n                <ion-textarea placeholder="Deskripsi foto" formControlName="caption" ngModel></ion-textarea>\n            </ion-item>\n            \n        </ion-list>    \n        <ion-buttons>\n            <button ion-button block color="secondary" type="button" (click)="getPic($event)">Ambil Gambar</button>\n            <button ion-button block color="primary" type="submit" [disabled]="!uploadForm.valid">Unggah</button>\n        </ion-buttons>\n    </form>\n</ion-content>\n'/*ion-inline-end:"D:\myapps\IONIC\laporanDinas\src\pages\camera\camera.html"*/,
+            selector: 'page-camera',template:/*ion-inline-start:"D:\apps\mobilespd\src\pages\camera\camera.html"*/'<ion-header>\n\n\n\n  <ion-navbar>\n\n    <ion-title>Ambil Gambar Foto</ion-title>\n\n  </ion-navbar>\n\n\n\n</ion-header>\n\n\n\n\n\n<ion-content padding>\n\n    <ion-img class="imageCam img-responsive" style="width: 100%; height: 85%;" src="{{ imgCam }}"></ion-img>\n\n    <br>\n\n    <form [formGroup]="uploadForm" (ngSubmit)="onSubmit()">\n\n        <ion-list>\n\n            <ion-item>\n\n                <ion-label color="primary" stacked>Komentar</ion-label>\n\n                <ion-textarea placeholder="Deskripsi foto" formControlName="caption" ngModel></ion-textarea>\n\n            </ion-item>\n\n            \n\n        </ion-list>    \n\n        <ion-buttons>\n\n            <button ion-button block color="secondary" type="button" (click)="getPic($event)">Ambil Gambar</button>\n\n            <button ion-button block color="primary" type="submit" [disabled]="!uploadForm.valid">Unggah</button>\n\n        </ion-buttons>\n\n    </form>\n\n</ion-content>\n\n'/*ion-inline-end:"D:\apps\mobilespd\src\pages\camera\camera.html"*/,
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */],
             __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavParams */],
@@ -888,17 +889,17 @@ var CameraPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 214:
+/***/ 215:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return KegiatanPointPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_animations__ = __webpack_require__(30);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_animations__ = __webpack_require__(31);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_services_global_service__ = __webpack_require__(19);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_services_kegiatan_service__ = __webpack_require__(24);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__input_uraian_input_uraian__ = __webpack_require__(215);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__input_uraian_input_uraian__ = __webpack_require__(216);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -944,7 +945,7 @@ var KegiatanPointPage = /** @class */ (function () {
     };
     KegiatanPointPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-kegiatan-point',template:/*ion-inline-start:"D:\myapps\IONIC\laporanDinas\src\pages\kegiatan-point\kegiatan-point.html"*/'<ion-header>\n  <ion-navbar>\n      <ion-title>Uraian Kegiatan</ion-title>\n    </ion-navbar>\n  </ion-header>\n  \n  <ion-content padding>\n    <ion-list [@listAnimation]="arrDataUraian.length">\n      <ion-item *ngFor="let item of arrDataUraian; let i = index" text-wrap>\n        <!-- <ion-icon name="leaf" item-start></ion-icon> -->\n        <ion-badge item-start>{{ (i+1) }}</ion-badge>\n        <p>{{ item.URAIAN_DESC }}</p>\n      </ion-item>\n    </ion-list>\n  </ion-content>\n\n  <!-- Fab Button -->\n<ion-fab #fab bottom right>\n  <button button-ion-fab ion-fab (click)="tambahPoint($event)">\n    <ion-icon class="icon" name="clipboard"></ion-icon>\n</button>\n</ion-fab>\n  '/*ion-inline-end:"D:\myapps\IONIC\laporanDinas\src\pages\kegiatan-point\kegiatan-point.html"*/,
+            selector: 'page-kegiatan-point',template:/*ion-inline-start:"D:\apps\mobilespd\src\pages\kegiatan-point\kegiatan-point.html"*/'<ion-header>\n\n  <ion-navbar>\n\n      <ion-title>Uraian Kegiatan</ion-title>\n\n    </ion-navbar>\n\n  </ion-header>\n\n  \n\n  <ion-content padding>\n\n    <ion-list [@listAnimation]="arrDataUraian.length">\n\n      <ion-item *ngFor="let item of arrDataUraian; let i = index" text-wrap>\n\n        <!-- <ion-icon name="leaf" item-start></ion-icon> -->\n\n        <ion-badge item-start>{{ (i+1) }}</ion-badge>\n\n        <p>{{ item.URAIAN_DESC }}</p>\n\n      </ion-item>\n\n    </ion-list>\n\n  </ion-content>\n\n\n\n  <!-- Fab Button -->\n\n<ion-fab #fab bottom right>\n\n  <button button-ion-fab ion-fab (click)="tambahPoint($event)">\n\n    <ion-icon class="icon" name="clipboard"></ion-icon>\n\n</button>\n\n</ion-fab>\n\n  '/*ion-inline-end:"D:\apps\mobilespd\src\pages\kegiatan-point\kegiatan-point.html"*/,
             animations: [
                 Object(__WEBPACK_IMPORTED_MODULE_1__angular_animations__["l" /* trigger */])('listAnimation', [
                     Object(__WEBPACK_IMPORTED_MODULE_1__angular_animations__["k" /* transition */])('* => *', [
@@ -972,16 +973,16 @@ var KegiatanPointPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 215:
+/***/ 216:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return InputUraianPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_services_global_service__ = __webpack_require__(19);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_services_kegiatan_service__ = __webpack_require__(24);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_forms__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_forms__ = __webpack_require__(10);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1004,16 +1005,37 @@ var InputUraianPage = /** @class */ (function () {
         this.globalService = globalService;
         this.kegiatanService = kegiatanService;
         this.currentData = {};
+        this.boolDisabled = true;
+        this.emptyArray = [];
+        this.defaultModules = {
+            toolbar: [
+                ['bold', 'italic', 'underline', 'strike'],
+                ['blockquote', 'code-block'],
+                [{ header: 1 }, { header: 2 }],
+                [{ list: 'ordered' }, { list: 'bullet' }],
+                [{ indent: '-1' }, { indent: '+1' }],
+                [{ direction: 'rtl' }],
+                [
+                    { color: this.emptyArray.slice() },
+                    { background: this.emptyArray.slice() }
+                ],
+                [{ align: this.emptyArray.slice() }],
+            ]
+        };
         if (this.navParams.get('item') != undefined) {
             this.currentData = this.navParams.get('item');
             console.log(this.currentData);
         }
         this.uraianForm = this.formBuilder.group({
-            uraian: ['', __WEBPACK_IMPORTED_MODULE_4__angular_forms__["f" /* Validators */].required]
+            uraian: ['', __WEBPACK_IMPORTED_MODULE_4__angular_forms__["g" /* Validators */].required]
         });
     }
     InputUraianPage.prototype.ionViewDidLoad = function () {
         console.log('ionViewDidLoad InputUraianPage');
+        var modules = this.defaultModules;
+    };
+    InputUraianPage.prototype.valuechange = function (event) {
+        console.log(event);
     };
     InputUraianPage.prototype.onSubmit = function () {
         var dataForm = this.uraianForm.value;
@@ -1028,29 +1050,26 @@ var InputUraianPage = /** @class */ (function () {
     };
     InputUraianPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-input-uraian',template:/*ion-inline-start:"D:\myapps\IONIC\laporanDinas\src\pages\input-uraian\input-uraian.html"*/'<ion-header>\n\n    <ion-navbar>\n      <ion-title>Tambah Uraian</ion-title>\n    </ion-navbar>\n  \n  </ion-header>\n  \n  \n  <ion-content padding>\n      <form [formGroup]="uraianForm" (ngSubmit)="onSubmit()">\n          <ion-list>\n              <ion-item>\n                  <ion-label color="primary" stacked>Uraian</ion-label>\n                  <ion-textarea placeholder="Deskripsi uraian" formControlName="uraian" ngModel></ion-textarea>\n              </ion-item>\n              \n          </ion-list>    \n          <ion-buttons>\n              <button ion-button block color="primary" type="submit" [disabled]="!uraianForm.valid">Simpan</button>\n          </ion-buttons>\n      </form>\n  </ion-content>\n  '/*ion-inline-end:"D:\myapps\IONIC\laporanDinas\src\pages\input-uraian\input-uraian.html"*/,
+            selector: 'page-input-uraian',template:/*ion-inline-start:"D:\apps\mobilespd\src\pages\input-uraian\input-uraian.html"*/'<ion-header>\n\n    <ion-navbar>\n      <ion-title>Tambah Uraian</ion-title>\n    </ion-navbar>\n  \n  </ion-header>\n  \n  \n  <ion-content padding>\n      <form [formGroup]="uraianForm" (ngSubmit)="onSubmit()">\n            <quill-editor placeholder="Deskripsi uraian" [modules]="defaultModules" [style]="{height: \'200px\'}" formControlName="uraian" ngModel></quill-editor>\n            <button ion-button block color="primary" type="submit" [disabled]="!uraianForm.valid">Simpan</button>\n      </form>\n  </ion-content>\n  '/*ion-inline-end:"D:\apps\mobilespd\src\pages\input-uraian\input-uraian.html"*/,
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */],
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavParams */],
-            __WEBPACK_IMPORTED_MODULE_4__angular_forms__["a" /* FormBuilder */],
-            __WEBPACK_IMPORTED_MODULE_2__providers_services_global_service__["a" /* GlobalService */],
-            __WEBPACK_IMPORTED_MODULE_3__providers_services_kegiatan_service__["a" /* KegiatanService */]])
+        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavParams */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_4__angular_forms__["a" /* FormBuilder */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__angular_forms__["a" /* FormBuilder */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_2__providers_services_global_service__["a" /* GlobalService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__providers_services_global_service__["a" /* GlobalService */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_3__providers_services_kegiatan_service__["a" /* KegiatanService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__providers_services_kegiatan_service__["a" /* KegiatanService */]) === "function" && _e || Object])
     ], InputUraianPage);
     return InputUraianPage;
+    var _a, _b, _c, _d, _e;
 }());
 
 //# sourceMappingURL=input-uraian.js.map
 
 /***/ }),
 
-/***/ 216:
+/***/ 217:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ProfilePage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(10);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_storage__ = __webpack_require__(47);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_storage__ = __webpack_require__(38);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1091,25 +1110,24 @@ var ProfilePage = /** @class */ (function () {
     };
     ProfilePage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-profile',template:/*ion-inline-start:"D:\myapps\IONIC\laporanDinas\src\pages\profile\profile.html"*/'<!--\n  Generated template for the ProfilePage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n  <ion-navbar>\n      <button ion-button menuToggle>\n          <ion-icon name="menu"></ion-icon>\n        </button>\n    <ion-title>Profile</ion-title>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content padding>\n    <ion-list>\n        <ion-item>\n            <ion-icon name="contact"></ion-icon>\n        </ion-item>\n        <ion-item>\n          <ion-label stacked>Name</ion-label>\n          <ion-input type="text" [(ngModel)]="userdata.fullname" [disabled]="true"></ion-input>\n        </ion-item>\n      \n        <ion-item>\n          <ion-label stacked>Username</ion-label>\n          <ion-input type="text" [(ngModel)]="userdata.username" [disabled]="true"></ion-input>\n        </ion-item>\n      \n      </ion-list>\n</ion-content>\n'/*ion-inline-end:"D:\myapps\IONIC\laporanDinas\src\pages\profile\profile.html"*/,
+            selector: 'page-profile',template:/*ion-inline-start:"D:\apps\mobilespd\src\pages\profile\profile.html"*/'<!--\n\n  Generated template for the ProfilePage page.\n\n\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n\n  Ionic pages and navigation.\n\n-->\n\n<ion-header>\n\n\n\n  <ion-navbar>\n\n      <button ion-button menuToggle>\n\n          <ion-icon name="menu"></ion-icon>\n\n        </button>\n\n    <ion-title>Profile</ion-title>\n\n  </ion-navbar>\n\n\n\n</ion-header>\n\n\n\n\n\n<ion-content padding>\n\n    <ion-list>\n\n        <ion-item>\n\n            <ion-icon name="contact"></ion-icon>\n\n        </ion-item>\n\n        <ion-item>\n\n          <ion-label stacked>Name</ion-label>\n\n          <ion-input type="text" [(ngModel)]="userdata.fullname" [disabled]="true"></ion-input>\n\n        </ion-item>\n\n      \n\n        <ion-item>\n\n          <ion-label stacked>Username</ion-label>\n\n          <ion-input type="text" [(ngModel)]="userdata.username" [disabled]="true"></ion-input>\n\n        </ion-item>\n\n      \n\n      </ion-list>\n\n</ion-content>\n\n'/*ion-inline-end:"D:\apps\mobilespd\src\pages\profile\profile.html"*/,
         }),
-        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavParams */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2__ionic_storage__["b" /* Storage */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__ionic_storage__["b" /* Storage */]) === "function" && _c || Object])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavParams */], __WEBPACK_IMPORTED_MODULE_2__ionic_storage__["b" /* Storage */]])
     ], ProfilePage);
     return ProfilePage;
-    var _a, _b, _c;
 }());
 
 //# sourceMappingURL=profile.js.map
 
 /***/ }),
 
-/***/ 217:
+/***/ 218:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__ = __webpack_require__(218);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__app_module__ = __webpack_require__(238);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__ = __webpack_require__(219);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__app_module__ = __webpack_require__(239);
 
 
 Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* platformBrowserDynamic */])().bootstrapModule(__WEBPACK_IMPORTED_MODULE_1__app_module__["a" /* AppModule */]);
@@ -1117,36 +1135,37 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 
 /***/ }),
 
-/***/ 238:
+/***/ 239:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppModule; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__ = __webpack_require__(29);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_platform_browser_animations__ = __webpack_require__(239);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__ = __webpack_require__(30);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_platform_browser_animations__ = __webpack_require__(240);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_forms__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ionic_storage__ = __webpack_require__(47);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_ionic_angular__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_forms__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ionic_storage__ = __webpack_require__(38);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_ionic_angular__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__angular_common_http__ = __webpack_require__(105);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__app_component__ = __webpack_require__(290);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__pages_login_login__ = __webpack_require__(205);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__pages_kegiatan_kegiatan__ = __webpack_require__(209);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__pages_kegiatan_detail_kegiatan_detail__ = __webpack_require__(210);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__pages_kegiatan_subdetail_kegiatan_subdetail__ = __webpack_require__(44);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__pages_kegiatan_subdetail2_kegiatan_subdetail2__ = __webpack_require__(110);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__pages_kegiatan_foto_kegiatan_foto__ = __webpack_require__(211);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__pages_kegiatan_point_kegiatan_point__ = __webpack_require__(214);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__pages_camera_camera__ = __webpack_require__(212);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__pages_input_laporan_input_laporan__ = __webpack_require__(108);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__pages_input_uraian_input_uraian__ = __webpack_require__(215);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__pages_daftar_laporan_daftar_laporan__ = __webpack_require__(109);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__pages_profile_profile__ = __webpack_require__(216);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__ionic_native_status_bar__ = __webpack_require__(202);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__ionic_native_splash_screen__ = __webpack_require__(204);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__providers_services_global_service__ = __webpack_require__(19);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__providers_services_kegiatan_service__ = __webpack_require__(24);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__ionic_native_camera__ = __webpack_require__(213);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_ngx_quill__ = __webpack_require__(291);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__app_component__ = __webpack_require__(298);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__pages_login_login__ = __webpack_require__(207);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__pages_kegiatan_kegiatan__ = __webpack_require__(108);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__pages_kegiatan_detail_kegiatan_detail__ = __webpack_require__(211);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__pages_kegiatan_subdetail_kegiatan_subdetail__ = __webpack_require__(45);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__pages_kegiatan_subdetail2_kegiatan_subdetail2__ = __webpack_require__(111);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__pages_kegiatan_foto_kegiatan_foto__ = __webpack_require__(212);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__pages_kegiatan_point_kegiatan_point__ = __webpack_require__(215);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__pages_camera_camera__ = __webpack_require__(213);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__pages_input_laporan_input_laporan__ = __webpack_require__(109);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__pages_input_uraian_input_uraian__ = __webpack_require__(216);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__pages_daftar_laporan_daftar_laporan__ = __webpack_require__(110);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__pages_profile_profile__ = __webpack_require__(217);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__ionic_native_status_bar__ = __webpack_require__(204);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__ionic_native_splash_screen__ = __webpack_require__(206);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__providers_services_global_service__ = __webpack_require__(19);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__providers_services_kegiatan_service__ = __webpack_require__(24);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_25__ionic_native_camera__ = __webpack_require__(214);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1178,58 +1197,60 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
+
 var AppModule = /** @class */ (function () {
     function AppModule() {
     }
     AppModule = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_2__angular_core__["I" /* NgModule */])({
             declarations: [
-                __WEBPACK_IMPORTED_MODULE_7__app_component__["a" /* MyApp */],
-                __WEBPACK_IMPORTED_MODULE_8__pages_login_login__["a" /* LoginPage */],
-                __WEBPACK_IMPORTED_MODULE_9__pages_kegiatan_kegiatan__["a" /* KegiatanPage */],
-                __WEBPACK_IMPORTED_MODULE_10__pages_kegiatan_detail_kegiatan_detail__["a" /* KegiatanDetailPage */],
-                __WEBPACK_IMPORTED_MODULE_11__pages_kegiatan_subdetail_kegiatan_subdetail__["a" /* KegiatanSubdetailPage */],
-                __WEBPACK_IMPORTED_MODULE_12__pages_kegiatan_subdetail2_kegiatan_subdetail2__["a" /* KegiatanSubdetail2Page */],
-                __WEBPACK_IMPORTED_MODULE_13__pages_kegiatan_foto_kegiatan_foto__["a" /* KegiatanFotoPage */],
-                __WEBPACK_IMPORTED_MODULE_14__pages_kegiatan_point_kegiatan_point__["a" /* KegiatanPointPage */],
-                __WEBPACK_IMPORTED_MODULE_15__pages_camera_camera__["a" /* CameraPage */],
-                __WEBPACK_IMPORTED_MODULE_16__pages_input_laporan_input_laporan__["a" /* InputLaporanPage */],
-                __WEBPACK_IMPORTED_MODULE_17__pages_input_uraian_input_uraian__["a" /* InputUraianPage */],
-                __WEBPACK_IMPORTED_MODULE_18__pages_daftar_laporan_daftar_laporan__["a" /* DaftarLaporanPage */],
-                __WEBPACK_IMPORTED_MODULE_19__pages_profile_profile__["a" /* ProfilePage */]
+                __WEBPACK_IMPORTED_MODULE_8__app_component__["a" /* MyApp */],
+                __WEBPACK_IMPORTED_MODULE_9__pages_login_login__["a" /* LoginPage */],
+                __WEBPACK_IMPORTED_MODULE_10__pages_kegiatan_kegiatan__["a" /* KegiatanPage */],
+                __WEBPACK_IMPORTED_MODULE_11__pages_kegiatan_detail_kegiatan_detail__["a" /* KegiatanDetailPage */],
+                __WEBPACK_IMPORTED_MODULE_12__pages_kegiatan_subdetail_kegiatan_subdetail__["a" /* KegiatanSubdetailPage */],
+                __WEBPACK_IMPORTED_MODULE_13__pages_kegiatan_subdetail2_kegiatan_subdetail2__["a" /* KegiatanSubdetail2Page */],
+                __WEBPACK_IMPORTED_MODULE_14__pages_kegiatan_foto_kegiatan_foto__["a" /* KegiatanFotoPage */],
+                __WEBPACK_IMPORTED_MODULE_15__pages_kegiatan_point_kegiatan_point__["a" /* KegiatanPointPage */],
+                __WEBPACK_IMPORTED_MODULE_16__pages_camera_camera__["a" /* CameraPage */],
+                __WEBPACK_IMPORTED_MODULE_17__pages_input_laporan_input_laporan__["a" /* InputLaporanPage */],
+                __WEBPACK_IMPORTED_MODULE_18__pages_input_uraian_input_uraian__["a" /* InputUraianPage */],
+                __WEBPACK_IMPORTED_MODULE_19__pages_daftar_laporan_daftar_laporan__["a" /* DaftarLaporanPage */],
+                __WEBPACK_IMPORTED_MODULE_20__pages_profile_profile__["a" /* ProfilePage */]
             ],
             imports: [
                 __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__["a" /* BrowserModule */],
                 __WEBPACK_IMPORTED_MODULE_1__angular_platform_browser_animations__["a" /* BrowserAnimationsModule */],
                 __WEBPACK_IMPORTED_MODULE_3__angular_forms__["b" /* FormsModule */],
                 __WEBPACK_IMPORTED_MODULE_6__angular_common_http__["b" /* HttpClientModule */],
-                __WEBPACK_IMPORTED_MODULE_5_ionic_angular__["d" /* IonicModule */].forRoot(__WEBPACK_IMPORTED_MODULE_7__app_component__["a" /* MyApp */], {}, {
+                __WEBPACK_IMPORTED_MODULE_5_ionic_angular__["d" /* IonicModule */].forRoot(__WEBPACK_IMPORTED_MODULE_8__app_component__["a" /* MyApp */], {}, {
                     links: []
                 }),
-                __WEBPACK_IMPORTED_MODULE_4__ionic_storage__["a" /* IonicStorageModule */].forRoot()
+                __WEBPACK_IMPORTED_MODULE_4__ionic_storage__["a" /* IonicStorageModule */].forRoot(),
+                __WEBPACK_IMPORTED_MODULE_7_ngx_quill__["a" /* QuillModule */]
             ],
             bootstrap: [__WEBPACK_IMPORTED_MODULE_5_ionic_angular__["b" /* IonicApp */]],
             entryComponents: [
-                __WEBPACK_IMPORTED_MODULE_7__app_component__["a" /* MyApp */],
-                __WEBPACK_IMPORTED_MODULE_8__pages_login_login__["a" /* LoginPage */],
-                __WEBPACK_IMPORTED_MODULE_9__pages_kegiatan_kegiatan__["a" /* KegiatanPage */],
-                __WEBPACK_IMPORTED_MODULE_10__pages_kegiatan_detail_kegiatan_detail__["a" /* KegiatanDetailPage */],
-                __WEBPACK_IMPORTED_MODULE_11__pages_kegiatan_subdetail_kegiatan_subdetail__["a" /* KegiatanSubdetailPage */],
-                __WEBPACK_IMPORTED_MODULE_12__pages_kegiatan_subdetail2_kegiatan_subdetail2__["a" /* KegiatanSubdetail2Page */],
-                __WEBPACK_IMPORTED_MODULE_13__pages_kegiatan_foto_kegiatan_foto__["a" /* KegiatanFotoPage */],
-                __WEBPACK_IMPORTED_MODULE_14__pages_kegiatan_point_kegiatan_point__["a" /* KegiatanPointPage */],
-                __WEBPACK_IMPORTED_MODULE_15__pages_camera_camera__["a" /* CameraPage */],
-                __WEBPACK_IMPORTED_MODULE_16__pages_input_laporan_input_laporan__["a" /* InputLaporanPage */],
-                __WEBPACK_IMPORTED_MODULE_17__pages_input_uraian_input_uraian__["a" /* InputUraianPage */],
-                __WEBPACK_IMPORTED_MODULE_18__pages_daftar_laporan_daftar_laporan__["a" /* DaftarLaporanPage */],
-                __WEBPACK_IMPORTED_MODULE_19__pages_profile_profile__["a" /* ProfilePage */]
+                __WEBPACK_IMPORTED_MODULE_8__app_component__["a" /* MyApp */],
+                __WEBPACK_IMPORTED_MODULE_9__pages_login_login__["a" /* LoginPage */],
+                __WEBPACK_IMPORTED_MODULE_10__pages_kegiatan_kegiatan__["a" /* KegiatanPage */],
+                __WEBPACK_IMPORTED_MODULE_11__pages_kegiatan_detail_kegiatan_detail__["a" /* KegiatanDetailPage */],
+                __WEBPACK_IMPORTED_MODULE_12__pages_kegiatan_subdetail_kegiatan_subdetail__["a" /* KegiatanSubdetailPage */],
+                __WEBPACK_IMPORTED_MODULE_13__pages_kegiatan_subdetail2_kegiatan_subdetail2__["a" /* KegiatanSubdetail2Page */],
+                __WEBPACK_IMPORTED_MODULE_14__pages_kegiatan_foto_kegiatan_foto__["a" /* KegiatanFotoPage */],
+                __WEBPACK_IMPORTED_MODULE_15__pages_kegiatan_point_kegiatan_point__["a" /* KegiatanPointPage */],
+                __WEBPACK_IMPORTED_MODULE_16__pages_camera_camera__["a" /* CameraPage */],
+                __WEBPACK_IMPORTED_MODULE_17__pages_input_laporan_input_laporan__["a" /* InputLaporanPage */],
+                __WEBPACK_IMPORTED_MODULE_18__pages_input_uraian_input_uraian__["a" /* InputUraianPage */],
+                __WEBPACK_IMPORTED_MODULE_19__pages_daftar_laporan_daftar_laporan__["a" /* DaftarLaporanPage */],
+                __WEBPACK_IMPORTED_MODULE_20__pages_profile_profile__["a" /* ProfilePage */]
             ],
             providers: [
-                __WEBPACK_IMPORTED_MODULE_20__ionic_native_status_bar__["a" /* StatusBar */],
-                __WEBPACK_IMPORTED_MODULE_21__ionic_native_splash_screen__["a" /* SplashScreen */],
-                __WEBPACK_IMPORTED_MODULE_22__providers_services_global_service__["a" /* GlobalService */],
-                __WEBPACK_IMPORTED_MODULE_23__providers_services_kegiatan_service__["a" /* KegiatanService */],
-                __WEBPACK_IMPORTED_MODULE_24__ionic_native_camera__["a" /* Camera */],
+                __WEBPACK_IMPORTED_MODULE_21__ionic_native_status_bar__["a" /* StatusBar */],
+                __WEBPACK_IMPORTED_MODULE_22__ionic_native_splash_screen__["a" /* SplashScreen */],
+                __WEBPACK_IMPORTED_MODULE_23__providers_services_global_service__["a" /* GlobalService */],
+                __WEBPACK_IMPORTED_MODULE_24__providers_services_kegiatan_service__["a" /* KegiatanService */],
+                __WEBPACK_IMPORTED_MODULE_25__ionic_native_camera__["a" /* Camera */],
                 { provide: __WEBPACK_IMPORTED_MODULE_2__angular_core__["u" /* ErrorHandler */], useClass: __WEBPACK_IMPORTED_MODULE_5_ionic_angular__["c" /* IonicErrorHandler */] }
             ]
         })
@@ -1248,11 +1269,11 @@ var AppModule = /** @class */ (function () {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return KegiatanService; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_common_http__ = __webpack_require__(105);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_catch__ = __webpack_require__(206);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_catch__ = __webpack_require__(208);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_catch___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_catch__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_do__ = __webpack_require__(207);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_do__ = __webpack_require__(209);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_do___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_do__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map__ = __webpack_require__(208);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map__ = __webpack_require__(210);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -1324,20 +1345,20 @@ var KegiatanService = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 290:
+/***/ 298:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MyApp; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(10);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__ = __webpack_require__(202);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__ = __webpack_require__(204);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ionic_storage__ = __webpack_require__(47);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__pages_login_login__ = __webpack_require__(205);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__pages_kegiatan_kegiatan__ = __webpack_require__(209);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__pages_daftar_laporan_daftar_laporan__ = __webpack_require__(109);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__pages_profile_profile__ = __webpack_require__(216);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__ = __webpack_require__(204);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__ = __webpack_require__(206);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ionic_storage__ = __webpack_require__(38);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__pages_login_login__ = __webpack_require__(207);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__pages_kegiatan_kegiatan__ = __webpack_require__(108);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__pages_daftar_laporan_daftar_laporan__ = __webpack_require__(110);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__pages_profile_profile__ = __webpack_require__(217);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1400,30 +1421,29 @@ var MyApp = /** @class */ (function () {
     };
     __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_8" /* ViewChild */])(__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* Nav */]),
-        __metadata("design:type", typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* Nav */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* Nav */]) === "function" && _a || Object)
+        __metadata("design:type", __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* Nav */])
     ], MyApp.prototype, "nav", void 0);
     MyApp = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({template:/*ion-inline-start:"D:\myapps\IONIC\laporanDinas\src\app\app.html"*/'<ion-split-pane when="md">\n  <!-- Menu Main Top  -->\n    <ion-menu [content]="content">\n        <ion-header  header-background-image [ngStyle]="{\'background-image\': \'url(assets/images/16.jpg)\'}">\n            <ion-thumbnail>\n                <img [src]="\'assets/images/login-3.png\'">\n            </ion-thumbnail>\n            <h2 item-title text-center>Laporan Perjalanan Dinas</h2>\n        </ion-header>\n        <!-- Menu Main List -->\n        <ion-content main-menu>\n          <ion-list no-margin no-padding>\n            <button menuClose ion-item paddinge-left no-lines item-title *ngFor="let p of pages" (click)="openPage(p)">\n              <ion-icon icon-small item-left>\n                <i class="icon {{ p.icon }}"></i>\n              </ion-icon>\n              {{p.title}}\n            </button>\n          </ion-list>\n        </ion-content>\n    </ion-menu>\n    <!-- Disable swipe-to-go-back because it\'s poor UX to combine STGB with side menus -->\n    <ion-nav [root]="rootPage" main #content swipeBackEnabled="false"></ion-nav>\n</ion-split-pane>\n'/*ion-inline-end:"D:\myapps\IONIC\laporanDinas\src\app\app.html"*/
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({template:/*ion-inline-start:"D:\apps\mobilespd\src\app\app.html"*/'<ion-split-pane when="md">\n  <!-- Menu Main Top  -->\n    <ion-menu [content]="content">\n        <ion-header  header-background-image [ngStyle]="{\'background-image\': \'url(assets/images/16.jpg)\'}">\n            <ion-thumbnail>\n                <img [src]="\'assets/images/login-3.png\'">\n            </ion-thumbnail>\n            <h2 item-title text-center>Laporan Perjalanan Dinas</h2>\n        </ion-header>\n        <!-- Menu Main List -->\n        <ion-content main-menu>\n          <ion-list no-margin no-padding>\n            <button menuClose ion-item paddinge-left no-lines item-title *ngFor="let p of pages" (click)="openPage(p)">\n              <ion-icon icon-small item-left>\n                <i class="icon {{ p.icon }}"></i>\n              </ion-icon>\n              {{p.title}}\n            </button>\n          </ion-list>\n        </ion-content>\n    </ion-menu>\n    <!-- Disable swipe-to-go-back because it\'s poor UX to combine STGB with side menus -->\n    <ion-nav [root]="rootPage" main #content swipeBackEnabled="false"></ion-nav>\n</ion-split-pane>\n'/*ion-inline-end:"D:\apps\mobilespd\src\app\app.html"*/
         }),
-        __metadata("design:paramtypes", [typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* Platform */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* Platform */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__["a" /* StatusBar */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__["a" /* StatusBar */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__["a" /* SplashScreen */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__["a" /* SplashScreen */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_4__ionic_storage__["b" /* Storage */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__ionic_storage__["b" /* Storage */]) === "function" && _e || Object])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* Platform */], __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__["a" /* StatusBar */], __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__["a" /* SplashScreen */], __WEBPACK_IMPORTED_MODULE_4__ionic_storage__["b" /* Storage */]])
     ], MyApp);
     return MyApp;
-    var _a, _b, _c, _d, _e;
 }());
 
 //# sourceMappingURL=app.component.js.map
 
 /***/ }),
 
-/***/ 44:
+/***/ 45:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return KegiatanSubdetailPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(10);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__kegiatan_foto_kegiatan_foto__ = __webpack_require__(211);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__kegiatan_point_kegiatan_point__ = __webpack_require__(214);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__kegiatan_foto_kegiatan_foto__ = __webpack_require__(212);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__kegiatan_point_kegiatan_point__ = __webpack_require__(215);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1464,7 +1484,7 @@ var KegiatanSubdetailPage = /** @class */ (function () {
     };
     KegiatanSubdetailPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-kegiatan-subdetail',template:/*ion-inline-start:"D:\myapps\IONIC\laporanDinas\src\pages\kegiatan-subdetail\kegiatan-subdetail.html"*/'\n<ion-header>\n\n    <ion-navbar>\n        <ion-title>\n            Detail Perjalanan Dinas\n        </ion-title>\n    </ion-navbar>\n  \n  </ion-header>\n  \n  \n  <ion-content padding>\n    <h5>Informasi</h5>\n    <hr>\n    <h4>{{ currentData.NAMA_KEGIATAN }}</h4>\n    <p>Tahun : <strong>{{ currentYear }}</strong></p>\n    <p>Lokasi : <strong>{{ currentData.PROVINSI_DESC }}, {{ currentData.KOTA_DESC }}</strong></p>\n  \n    <br>\n    <p class="text-center">Uraian Foto &amp; Kegiatan</p>\n    <ion-list>\n        <button ion-item (click)="getAllFoto($event)">\n            Foto Kegiatan\n            <ion-badge item-end>{{ currentData.TOTAL_FOTO }}</ion-badge>\n        </button>\n        <button ion-item (click)="getAllPoint($event)">\n            Point-point Kegiatan\n            <ion-badge item-end>{{ currentData.TOTAL_URAIAN }}</ion-badge>\n        </button>  \n    </ion-list>\n  </ion-content>\n  \n  \n  '/*ion-inline-end:"D:\myapps\IONIC\laporanDinas\src\pages\kegiatan-subdetail\kegiatan-subdetail.html"*/,
+            selector: 'page-kegiatan-subdetail',template:/*ion-inline-start:"D:\apps\mobilespd\src\pages\kegiatan-subdetail\kegiatan-subdetail.html"*/'\n\n<ion-header>\n\n\n\n    <ion-navbar>\n\n        <ion-title>\n\n            Detail Perjalanan Dinas\n\n        </ion-title>\n\n    </ion-navbar>\n\n  \n\n  </ion-header>\n\n  \n\n  \n\n  <ion-content padding>\n\n    <h5>Informasi</h5>\n\n    <hr>\n\n    <h4>{{ currentData.NAMA_KEGIATAN }}</h4>\n\n    <p>Tahun : <strong>{{ currentYear }}</strong></p>\n\n    <p>Lokasi : <strong>{{ currentData.PROVINSI_DESC }}, {{ currentData.KOTA_DESC }}</strong></p>\n\n  \n\n    <br>\n\n    <p class="text-center">Uraian Foto &amp; Kegiatan</p>\n\n    <ion-list>\n\n        <button ion-item (click)="getAllFoto($event)">\n\n            Foto Kegiatan\n\n            <ion-badge item-end>{{ currentData.TOTAL_FOTO }}</ion-badge>\n\n        </button>\n\n        <button ion-item (click)="getAllPoint($event)">\n\n            Point-point Kegiatan\n\n            <ion-badge item-end>{{ currentData.TOTAL_URAIAN }}</ion-badge>\n\n        </button>  \n\n    </ion-list>\n\n  </ion-content>\n\n  \n\n  \n\n  '/*ion-inline-end:"D:\apps\mobilespd\src\pages\kegiatan-subdetail\kegiatan-subdetail.html"*/,
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavParams */]])
     ], KegiatanSubdetailPage);
@@ -1475,5 +1495,5 @@ var KegiatanSubdetailPage = /** @class */ (function () {
 
 /***/ })
 
-},[217]);
+},[218]);
 //# sourceMappingURL=main.js.map

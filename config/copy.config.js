@@ -2,17 +2,9 @@
 // provide a name for an entry, it can be anything such as 'copyAssets' or 'copyFonts'
 // then provide an object with a `src` array of globs and a `dest` string
 module.exports = {
-  copyFroalaEditorCss: {
-    src: ['{{ROOT}}/node_modules/froala-editor/css/froala_editor.pkgd.min.css', '{{ROOT}}/node_modules/froala-editor/css/froala_style.min.css'],
-    dest: '{{BUILD}}'
-  },
-  copyFontAwesome: {
-    src: '{{ROOT}}/node_modules/font-awesome/css/font-awesome.min.css',
-    dest: '{{BUILD}}'
-  },
-  copyFontsAwesomeFonts: {
-    src: '{{ROOT}}/node_modules/font-awesome/fonts/*',
-    dest: '{{WWW}}/fonts'
+  copyThemes: {
+    src: ['{{ROOT}}/assets/quill/*'],
+    dest: '{{WWW}}/assets/quill'
   },
   copyAssets: {
     src: ['{{SRC}}/assets/**/*'],
