@@ -5,6 +5,8 @@ import { FormsModule }   from '@angular/forms';
 import { IonicStorageModule } from '@ionic/storage';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { HttpClientModule } from '@angular/common/http';
+import "froala-editor/js/froala_editor.pkgd.min.js";
+import { FroalaEditorModule, FroalaViewModule } from 'angular-froala-wysiwyg';
 
 import { MyApp } from './app.component';
 import { LoginPage } from '../pages/login/login';
@@ -48,7 +50,9 @@ import { Camera } from '@ionic-native/camera';
     FormsModule,
     HttpClientModule,
     IonicModule.forRoot(MyApp),
-    IonicStorageModule.forRoot()
+    IonicStorageModule.forRoot(),
+    FroalaEditorModule.forRoot(), 
+    FroalaViewModule.forRoot()
   ],
   bootstrap: [IonicApp],
   entryComponents: [

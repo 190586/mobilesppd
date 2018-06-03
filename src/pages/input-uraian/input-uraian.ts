@@ -10,7 +10,9 @@ import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 })
 export class InputUraianPage {
   currentData:any = {};
+  uraianTxt:string = '';
   uraianForm: FormGroup;
+  boolDisabled: boolean = true;
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams, 
@@ -31,16 +33,33 @@ export class InputUraianPage {
     console.log('ionViewDidLoad InputUraianPage');
   }
 
+  public options: Object = {
+    placeholderText: 'Deskripsi uraian',
+    charCounterCount: true,
+    toolbarButtonsXS: ['bold', 'italic', 'underline', 'fontSize', 'color', 'align', 'formatOL', 'formatUL', 'outdent', 'indent', 'undo', 'redo'],
+    height: 300
+  };
+
+  valuechange(event: any){
+    console.log(event);
+  }
+
   onSubmit(){
     let dataForm = this.uraianForm.value;
-    let objData = {
-      kegiatan_id:this.currentData.KEGIATAN_ID,
-      kegiatan_detail_id:this.currentData.KEGIATAN_DETAIL_ID, 
-      uraian: dataForm.uraian
-    };
-    console.log(objData);
-    this.globalService.presentToast('Uraian berhasil disimpan!');
-    this.navCtrl.pop();
+    if(this.uraianTxt != ''){
+      let objData = {
+        kegiatan_id:this.currentData.KEGIATAN_ID,
+        kegiatan_detail_id:this.currentData.KEGIATAN_DETAIL_ID, 
+        //uraian: dataForm.uraian,
+        uraian: this.uraianTxt
+      };
+      console.log(objData);
+      this.globalService.presentToast('Uraian berhasil disimpan!');
+      this.navCtrl.pop();
+    }else{
+      this.globalService.presentAlert('Warning', 'Uraian masih kosong');
+    }
+    
   }
 
 }
